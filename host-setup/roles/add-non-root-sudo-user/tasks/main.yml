@@ -1,0 +1,37 @@
+---
+- name: Add non-root user
+  user:
+    name: "{{ host_non_root_user }}"
+    password: "{{ host_non_root_user_password | password_hash('sha512', host_non_root_password_salt) }}"
+    update_password: on_create
+    create_home: yes
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    state: present
+
+
+- name: Add SSH public keys for non-root user
+  authorized_key:
+    user: "{{ host_non_root_user }}"
+    key: "{{ lookup('file', host_non_root_user_ssh_public_key_file_path) }}"
+    state: present
+
+
+# Ensure non-root user can sudo without password
+#
+- name: Set includedir in sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    line: "#includedir /etc/sudoers.d"
+    state: present
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: Add non-root user to sudo without password
+  lineinfile:
+    path: /etc/sudoers.d/90-{{ host_non_root_user }}
+    line: '{{ host_non_root_user }} ALL=(ALL) NOPASSWD: ALL'
+    state: present
+    mode: 0440
+    create: yes
+    validate: 'visudo -cf %s'

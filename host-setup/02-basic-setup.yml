@@ -1,0 +1,26 @@
+---
+- name: Basic host setup
+  hosts: host_wireguard_ip
+  
+  vars_files:
+    - "{{ playbook_dir }}/../configuration/config_path.yml"
+    - "{{ host_config_path }}"
+  
+  vars:
+    ansible_port: "{{ host_initial_ssh_port }}"
+    ansible_user: "{{ host_non_root_user }}"
+    ansible_ssh_pass: "{{ host_non_root_user_password }}"
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_become: yes
+    ansible_become_method: sudo
+    transfer_method: scp  
+  
+  roles:
+    - role: system-upgrade
+    - role: set-hostname
+    - role: install-basic-packages
+    - role: enable-ipv4-packet-forwarding
+    - role: set-up-veth0
+    - role: set-up-ssh        ##### <----- THIS NEEDS TESTING (on netcup RS2000old) with and without 2FA !!!
+    - role: firewall-setup
+    - role: reboot-host

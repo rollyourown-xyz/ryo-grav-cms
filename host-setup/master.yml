@@ -1,0 +1,4 @@
+---
+- import_playbook: 01-initial-setup.yml
+- import_playbook: 02-basic-setup.yml
+- import_playbook: 03-lxd-setup.yml

@@ -1,0 +1,57 @@
+---
+## Generic directory for LXD container persistent storage
+## ------------------------------------------------------
+
+  ## Create directories on host to be mounted in containers
+
+- name: Create a directory to container mounts for containers
+  file:
+    path: /var/container-directories
+    state: directory
+    mode: '0755'
+
+
+
+## Directories for project-specific LXD container persistent storage
+## -----------------------------------------------------------------
+
+### Certbot configuration directory
+
+- name: Create a directory to mount in certbot containers
+  file:
+    path: /var/container-directories/certbot
+    state: directory
+    mode: '0755'
+
+
+### TLS certificates directory
+
+- name: Create a directory to mount in containers needing TLS certificates
+  file:
+    path: /var/container-directories/tls
+    state: directory
+    mode: '0755'
+
+
+### HAProxy directory
+
+- name: Create a directory to mount in HAProxy containers needing TLS certificates
+  file:
+    path: /var/container-directories/tls/haproxy
+    state: directory
+    mode: '0755'
+
+
+### Website directories
+
+- name: Create a directory for website content
+  file:
+    path: /var/container-directories/website
+    state: directory
+    mode: '0755'
+
+- name: Create a directory for grav content
+  file:
+    path: /var/container-directories/website/grav
+    state: directory
+    mode: '0755'
