@@ -1,0 +1,3 @@
+---
+host_config_path: <PATH>     # Enter the path your local host_configuration.yml file here
+project_config_path: <PATH>  # Enter the path your local project_configuration.yml file here
