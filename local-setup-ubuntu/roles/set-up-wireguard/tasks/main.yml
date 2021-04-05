@@ -1,31 +1,43 @@
 ---
-- name: Create folder for wireguard secrets
-  file: 
-    mode: 0700
-    owner: root
-    group: root
-    path: /etc/wireguard/ryo
-    state: directory
+- name: Generate wireguard host private key
+  shell: "wg genkey"
+  register: generated_host_private_key
   when: set_up_local_wireguard
 
 
-- name: Generate wireguard secrets
+- name: Generate wireguard host public key
   shell:
-    chdir: /etc/wireguard/ryo
-    cmd: "{{ item }}"
-  with_items:
-    - "wg genkey | tee host-privatekey | wg pubkey > host-publickey"
-    - "chmod 770 host-publickey"
-    - "wg genkey | tee local-privatekey | wg pubkey > local-publickey"
-    - "chmod 770 local-publickey"
-    - "wg genpsk > presharedkey"
-    - "chmod 770 presharedkey"
+    cmd: "wg pubkey"
+    stdin: "{{ generated_host_private_key.stdout }}"
+    stdin_add_newline: no
+  register: generated_host_public_key
+  when: set_up_local_wireguard
+
+
+- name: Generate wireguard local private key
+  shell: "wg genkey"
+  register: generated_local_private_key
+  when: set_up_local_wireguard
+
+
+- name: Generate wireguard local public key
+  shell:
+    cmd: "wg pubkey"
+    stdin: "{{ generated_local_private_key.stdout }}"
+    stdin_add_newline: no
+  register: generated_local_public_key
+  when: set_up_local_wireguard
+
+
+- name: Generate wireguard preshared key
+  command: "wg genpsk"
+  register: generated_preshared_key
   when: set_up_local_wireguard
 
 
 - name: Create host wireguard configuration file
   template:
-    mode: 750
+    mode: 640
     owner: root
     group: root
     dest: /etc/wireguard/ryo-host.conf
@@ -36,7 +48,7 @@
 
 - name: Create local wireguard configuration file
   template:
-    mode: 750
+    mode: 640
     owner: root
     group: root
     dest: /etc/wireguard/ryo-local.conf

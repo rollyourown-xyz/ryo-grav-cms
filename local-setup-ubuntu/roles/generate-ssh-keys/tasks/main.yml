@@ -1,9 +1,7 @@
 ---
-#### FOR ALL TASKS, USE 'when generate_ssh_keys'
-
-- name: Install ssh-keygen
+- name: Install openssh-client
   apt:
-    name: ssh-keygen
+    name: openssh-client
     update_cache: yes
     state: present
   when: generate_ssh_keys
