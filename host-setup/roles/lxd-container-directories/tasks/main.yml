@@ -2,7 +2,7 @@
 ## Generic directory for LXD container persistent storage
 ## ------------------------------------------------------
 
-  ## Create directories on host to be mounted in containers
+## Create directories on host to be mounted in containers
 
 - name: Create a directory to container mounts for containers
   file:
