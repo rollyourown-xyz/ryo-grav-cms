@@ -1,0 +1,53 @@
+---
+- name: Create folder for wireguard secrets
+  file: 
+    mode: 0700
+    owner: root
+    group: root
+    path: /etc/wireguard/ryo
+    state: directory
+  when: set_up_local_wireguard
+
+
+- name: Generate wireguard secrets
+  shell:
+    chdir: /etc/wireguard/ryo
+    cmd: "{{ item }}"
+  with_items:
+    - "wg genkey | tee host-privatekey | wg pubkey > host-publickey"
+    - "chmod 770 host-publickey"
+    - "wg genkey | tee local-privatekey | wg pubkey > local-publickey"
+    - "chmod 770 local-publickey"
+    - "wg genpsk > presharedkey"
+    - "chmod 770 presharedkey"
+  when: set_up_local_wireguard
+
+
+- name: Create host wireguard configuration file
+  template:
+    mode: 750
+    owner: root
+    group: root
+    dest: /etc/wireguard/ryo-host.conf
+    src: ryo-host.conf.j2
+    force: yes
+  when: set_up_local_wireguard
+
+
+- name: Create local wireguard configuration file
+  template:
+    mode: 750
+    owner: root
+    group: root
+    dest: /etc/wireguard/ryo-local.conf
+    src: ryo-local.conf.j2
+    force: yes
+  when: set_up_local_wireguard
+
+
+- name: Enable wireguard interface ryo-local as service
+  service:
+    name: wg-quick@ryo-local
+    enabled: yes
+    state: restarted
+  when: set_up_local_wireguard

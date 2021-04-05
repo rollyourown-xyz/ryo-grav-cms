@@ -1,0 +1,18 @@
+---
+#### FOR ALL TASKS, USE 'when generate_ssh_keys'
+
+- name: Install ssh-keygen
+  apt:
+    name: ssh-keygen
+    update_cache: yes
+    state: present
+  when: generate_ssh_keys
+
+- name: Generate SSH keys
+  openssh_keypair:
+    path: "/home/{{ local_non_root_user }}/.ssh/id_ssh_rsa"
+    owner: "{{ local_non_root_user }}"
+    group: "{{ local_non_root_user }}"
+    type: rsa
+    state: present
+  when: generate_ssh_keys
