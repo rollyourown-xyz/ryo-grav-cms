@@ -14,6 +14,7 @@
 
   roles:
     - role: generate-ssh-keys
+    - role: install-sshpass
     - role: install-wireguard
     - role: set-up-wireguard
     - role: install-and-set-up-lxd
