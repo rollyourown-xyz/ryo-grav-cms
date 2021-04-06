@@ -1,0 +1,21 @@
+---
+- name: Create a self-signed SSL cert for first-time haproxy start
+  hosts: host_wireguard_ip
+  
+  vars_files:
+    - "{{ playbook_dir }}/../configuration/config_path.yml"
+    - "{{ local_config_path }}"
+    - "{{ host_config_path }}"
+  
+  vars:
+    ansible_port: "{{ host_new_ssh_port }}"
+    ansible_user: "{{ host_non_root_user }}"
+    ansible_ssh_pass: "{{ host_non_root_user_password }}"
+    ansible_ssh_private_key_file: "{{ host_non_root_user_ssh_private_key_file_path }}"
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_become: yes
+    ansible_become_method: sudo
+    transfer_method: scp  
+  
+  roles:
+    - role: self-signed-cert

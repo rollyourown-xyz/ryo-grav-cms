@@ -1,0 +1,9 @@
+---
+- name: Copy self-signed cert to mount directory for haproxy ssl
+  copy:
+    mode: 0755
+    owner: root
+    group: root
+    dest: /var/container-directories/tls/haproxy/ryo.pem
+    src: ryo.pem
+    force: yes
