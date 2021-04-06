@@ -21,6 +21,6 @@
     - role: install-basic-packages
     - role: enable-ipv4-packet-forwarding
     - role: set-up-veth0
-    - role: set-up-ssh        ##### <----- THIS NEEDS TESTING (on netcup RS2000old) with and without 2FA !!!
+    - role: set-up-ssh
     - role: firewall-setup
     - role: reboot-host

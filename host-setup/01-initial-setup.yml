@@ -55,4 +55,5 @@
   
   roles:
     - role: system-upgrade
-    - role: install-and-set-up-wireguard
+    - role: install-wireguard
+    - role: set-up-wireguard
