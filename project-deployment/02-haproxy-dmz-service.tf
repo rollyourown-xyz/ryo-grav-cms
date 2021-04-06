@@ -10,7 +10,7 @@ module "deploy-haproxy-dmz" {
   container_name             = "haproxy-dmz"
   container_profiles         = ["default"]
   container_network          = "lxd-dmz"
-  container_ipv4_address     = "10.10.10.10"
+  container_ipv4_address     = join(".", [ local.lxd_dmz_network_part, "10" ])
   container_cloud-init_file  = "cloud-init/cloud-init-basic.yml"
 
   container_proxies = [

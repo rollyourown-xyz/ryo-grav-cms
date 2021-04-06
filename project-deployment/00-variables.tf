@@ -13,6 +13,9 @@ locals {
   lxd_host_private_ipv4_address = yamldecode(file(local.host_config_path))["host_wireguard_address"]
   lxd_host_public_ipv4_address  = yamldecode(file(local.host_config_path))["host_public_ip"]
   lxd_core_trust_password       = yamldecode(file(local.host_config_path))["lxd_core_trust_password"]
+  lxd_dmz_network_part          = yamldecode(file(local.host_config_path))["lxd_dmz_network_part"]
+  lxd_frontend_network_part     = yamldecode(file(local.host_config_path))["lxd_frontend_network_part"]
+  lxd_backend_network_part      = yamldecode(file(local.host_config_path))["lxd_backend_network_part"]
 }
 
 
