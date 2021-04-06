@@ -1,5 +1,22 @@
 ---
-- name: Set up LXD on the host
+- name: Add host as LXD remote on local machine 
+  hosts: local
+  
+  vars_files:
+    - "{{ playbook_dir }}/../configuration/config_path.yml"
+    - "{{ local_config_path }}"
+    - "{{ host_config_path }}"
+  
+  vars:
+    ansible_user: "{{ local_non_root_user }}"
+    ansible_become: yes
+    ansible_become_password: "{{ local_non_root_user_password }}"
+  
+  roles:
+    - role: lxd-host-as-local-remote
+
+
+- name: Add local machine as LXD remote on host
   hosts: host_wireguard_ip
   
   vars_files:
@@ -18,7 +35,4 @@
     transfer_method: scp  
   
   roles:
-    - role: lxd-setup
-    - role: lxd-tune-host
-    - role: lxd-container-directories
-    - role: reboot-host
+    - role: lxd-local-as-host-remote

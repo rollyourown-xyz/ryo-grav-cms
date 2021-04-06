@@ -2,3 +2,4 @@
 - import_playbook: 01-initial-setup.yml
 - import_playbook: 02-basic-setup.yml
 - import_playbook: 03-lxd-setup.yml
+- import_playbook: 04-lxd-remotes-setup.yml
