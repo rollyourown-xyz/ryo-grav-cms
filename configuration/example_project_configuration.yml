@@ -1,2 +1,7 @@
 ---
-## TODO
+#---------------------
+# Domain configuration
+#---------------------
+
+project_domain_name: <DOMAIN>      # Set the domain to be used for the project. The DNS A record for the project's domain must be set to point to the server
+

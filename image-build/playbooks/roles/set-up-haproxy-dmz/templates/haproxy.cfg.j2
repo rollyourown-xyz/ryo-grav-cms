@@ -1,0 +1,166 @@
+global
+   log /dev/log	local0
+   log /dev/log	local1 notice
+   chroot /var/lib/haproxy
+   stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
+   stats timeout 30s
+   user haproxy
+   group haproxy
+   daemon
+
+   tune.ssl.default-dh-param 2048
+   # Default SSL material locations
+   ca-base /etc/ssl/certs
+   crt-base /etc/ssl/private
+
+   # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+   ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+   ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+   ssl-default-bind-options prefer-client-ciphers no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+
+   ssl-default-server-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+   ssl-default-server-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+   ssl-default-server-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+
+
+defaults
+   log	global
+   mode	http
+   option	httplog
+   option	dontlognull
+   timeout connect 5000
+   timeout client  50000
+   timeout server  50000
+   errorfile 400 /etc/haproxy/errors/400.http
+   errorfile 403 /etc/haproxy/errors/403.http
+   errorfile 408 /etc/haproxy/errors/408.http
+   errorfile 500 /etc/haproxy/errors/500.http
+   errorfile 502 /etc/haproxy/errors/502.http
+   errorfile 503 /etc/haproxy/errors/503.http
+   errorfile 504 /etc/haproxy/errors/504.http
+
+
+## Listeners
+############
+
+## !!!!
+## TEMP: FOR TESTING Remove before publishing
+## !!!!
+# HAProxy Admin
+listen stats
+   bind :::6080 v4v6
+   mode http
+   stats enable
+   stats hide-version
+   stats uri /
+   stats realm HAProxy\ Stats
+   stats auth admin:poocrumpet
+   stats admin if TRUE
+   stats refresh 5s
+   stats show-legends
+## !!!!
+## TEMP: FOR TESTING Remove before publishing
+## !!!!
+
+
+## Frontends
+############
+
+# HTTP front-end
+frontend http_80
+   bind :::80 v4v6
+   option forwardfor
+   option http-server-close
+   http-request set-header X-Forwarded-Proto https if { ssl_fc }
+   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
+   acl letsencrypt-request path_beg -i /.well-known/acme-challenge/
+   use_backend letsencrypt_80 if letsencrypt-request
+   default_backend default
+
+# HTTPS front-end
+frontend http_443
+   bind :::443 v4v6 ssl crt /etc/haproxy/ssl/ alpn h2,http/1.1
+   option forwardfor
+   option http-server-close
+   option http-pretend-keepalive
+   http-request set-header X-Forwarded-Proto https if { ssl_fc }
+   http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
+   http-response set-header Strict-Transport-Security "max-age=16000000; includeSubDomains;"
+
+   # Letsencrypt certificate renewal
+   acl letsencrypt-request path_beg -i /.well-known/acme-challenge/
+   
+   # Project domain traffic
+   acl project-domain hdr(host) -i {{ project_domain_name }}
+   
+   # Letsencrypt backend rules
+   use_backend letsencrypt_443 if letsencrypt-request
+   
+   # Project domain backend rules
+   use_backend webserver if project-domain
+
+   # default backend rule
+   default_backend default
+
+
+## Backends
+###########
+
+# Letsencrypt HTTP backend
+backend letsencrypt_80
+   source {{ lxd_dmz_network_part }}.10
+   server certbot certbot.lxd-fe:80 weight 1 init-addr last,libc,none resolvers lxd-fe
+
+# Letsencrypt HTTPS backend
+backend letsencrypt_443
+   source {{ lxd_dmz_network_part }}.10
+   server certbot certbot.lxd-fe:443 weight 1 init-addr last,libc,none resolvers lxd-fe
+
+# Project domain webserver back-end 
+backend webserver
+   redirect scheme https code 301 if !{ ssl_fc }
+   source {{ lxd_dmz_network_part }}.10
+   http-request set-header X-SSL %[ssl_fc]
+   balance roundrobin
+   server webserver webserver.lxd-fe:80 check weight 1 init-addr last,libc,none resolvers lxd-fe
+
+# Default backend
+backend default
+   http-request deny deny_status 404
+
+
+## Resolvers
+############
+
+# LXD DMZ network resolver
+resolvers lxd-dmz
+   nameserver dns1 {{ lxd_dmz_network_part }}.1:53
+   resolve_retries       3
+   timeout retry         1s
+   hold other           30s
+   hold refused         30s
+   hold nx              30s
+   hold timeout         30s
+   hold valid           10s
+
+# LXD Frontend network resolver
+resolvers lxd-fe
+   nameserver dns1 {{ lxd_frontend_network_part }}.1:53
+   resolve_retries       3
+   timeout retry         1s
+   hold other           30s
+   hold refused         30s
+   hold nx              30s
+   hold timeout         30s
+   hold valid           10s
+
+# LXD Backend network resolver
+resolvers lxd-be
+   nameserver dns1 {{ lxd_backend_network_part }}.1:53
+   resolve_retries       3
+   timeout retry         1s
+   hold other           30s
+   hold refused         30s
+   hold nx              30s
+   hold timeout         30s
+   hold valid           10s
