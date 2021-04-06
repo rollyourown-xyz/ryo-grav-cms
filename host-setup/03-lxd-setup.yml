@@ -4,6 +4,7 @@
   
   vars_files:
     - "{{ playbook_dir }}/../configuration/config_path.yml"
+    - "{{ local_config_path }}"
     - "{{ host_config_path }}"
   
   vars:
