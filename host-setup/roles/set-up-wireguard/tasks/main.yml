@@ -1,12 +1,4 @@
 ---
-- name: Install wireguard
-  apt:
-    name: wireguard
-    update_cache: yes
-    state: present
-  register: changes_made
-
-
 - name: Copy wireguard configuration file
   copy:
     mode: 0640
