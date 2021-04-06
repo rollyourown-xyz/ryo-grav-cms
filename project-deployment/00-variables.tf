@@ -19,7 +19,7 @@ locals {
 # Input Variables
 #################
 
-variable "haproxy_image_version" {
-  description = "Version of the haproxy-dmz image to deploy"
+variable "image_version" {
+  description = "Version of the images to deploy"
   type        = string
 }

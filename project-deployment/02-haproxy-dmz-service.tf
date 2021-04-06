@@ -6,7 +6,7 @@ module "deploy-haproxy-dmz" {
 
   lxd_remote                 = local.lxd_remote_name
   host_external_ipv4_address = local.lxd_host_public_ipv4_address
-  container_image            = join("-", [ "haproxy-dmz", var.haproxy_image_version ])
+  container_image            = join("-", [ "haproxy-dmz", var.image_version ])
   container_name             = "haproxy-dmz"
   container_profiles         = ["default"]
   container_network          = "lxd-dmz"

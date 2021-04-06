@@ -42,6 +42,6 @@ terraform -chdir=project-deployment init
 echo ""
 echo "Executing command: terraform -chdir=project-deployment apply. Check the plan before confirming apply"
 echo ""
-terraform -chdir=project-deployment apply
+terraform -chdir=project-deployment apply -var="image_version=$version"
 echo ""
 echo "Completed"
