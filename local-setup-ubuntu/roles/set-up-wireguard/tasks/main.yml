@@ -48,10 +48,10 @@
 
 - name: Create local wireguard configuration file
   template:
-    mode: 640
+    mode: 644
     owner: root
     group: root
-    dest: /etc/wireguard/ryo-local.conf
+    dest: "/home/{{ local_non_root_user }}/ryo-local.conf"
     src: ryo-local.conf.j2
     force: yes
   when: set_up_local_wireguard
