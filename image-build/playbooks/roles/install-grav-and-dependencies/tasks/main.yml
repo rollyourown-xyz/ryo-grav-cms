@@ -48,7 +48,6 @@
   unarchive:
     owner: www-data
     group: www-data
-    mode: 0775
     src: "https://github.com/getgrav/grav/releases/download/{{ grav_version }}/grav-admin-v{{ grav_version }}.zip"
     dest: /var/www/
     remote_src: yes

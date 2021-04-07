@@ -122,7 +122,7 @@
 #
 - name: Copy the site.yaml file
   copy:
-    mode: 0644
+    mode: 0664
     owner: www-data
     group: www-data
     dest: /var/www/grav-admin/user/config/site.yaml
@@ -154,7 +154,6 @@
 #
 - name: Copy grav user directory to bootstrap directory
   copy:
-    mode: 0755
     owner: www-data
     group: www-data
     dest: /usr/local/bootstrap/
