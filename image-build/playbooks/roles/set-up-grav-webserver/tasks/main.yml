@@ -142,6 +142,18 @@
 #     force: yes
 
 
+# Copy the grav_admin account file
+#
+- name: Copy the grav_admin account file
+  template:
+    mode: 0644
+    owner: www-data
+    group: www-data
+    dest: /var/www/grav-admin/user/accounts/grav_admin.yaml
+    src: grav_admin.yaml.j2
+    force: yes
+
+
 # # Add the grav_admin user
 # #
 # - name: Add the grav_admin user
