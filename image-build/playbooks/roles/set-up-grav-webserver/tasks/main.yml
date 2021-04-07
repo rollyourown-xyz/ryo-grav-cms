@@ -75,7 +75,7 @@
     mode: 0644
     owner: root
     group: root
-    dest: "/etc/nginx/sites-available/grav"
+    dest: /etc/nginx/sites-available/grav
     src: nginx-sites-available
     force: yes
 
@@ -84,8 +84,8 @@
 #
 - name: Enable grav in sites-enabled directory
   file:
-    src: "/etc/nginx/sites-available/grav"
-    dest: "/etc/nginx/sites-enabled/grav"
+    src: /etc/nginx/sites-available/grav
+    dest: /etc/nginx/sites-enabled/grav
     state: link
 
 
@@ -93,7 +93,7 @@
 #
 - name: Disable the nginx default site
   file:
-    path: "/etc/nginx/sites-enabled/default"
+    path: /etc/nginx/sites-enabled/default
     state: absent
 
 
@@ -119,14 +119,16 @@
 
 
 # Copy grav user directory to bootstrap directory
+#
 - name: Copy grav user directory to bootstrap directory
-  copy: 0755
-  owner: www-data
-  group: www-data
-  dest: /usr/local/bootstrap/user
-  src: /var/www/grav-admin/user
-  remote_src: yes
-  force: yes
+  copy:
+    mode: 0755
+    owner: www-data
+    group: www-data
+    dest: /usr/local/bootstrap/user
+    src: /var/www/grav-admin/user
+    remote_src: yes
+    force: yes
 
 
 # Remove the grav user directory
@@ -144,5 +146,5 @@
     mode: 0755
     owner: www-data
     group: www-data
-    path: /var/www/grav/user
+    path: /var/www/grav-admin/user
     state: directory
