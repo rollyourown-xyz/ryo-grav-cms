@@ -5,3 +5,10 @@
 
 project_domain_name: <DOMAIN>      # Set the domain to be used for the project. The DNS A record for the project's domain must be set to point to the server
 
+
+#------------------------
+# Grav site configuration
+#------------------------
+
+grav_admin_password: <PASSWORD>    # Set a strong password for the grav_admin user - minimum 8 chars, at least one number, one uppercase and one lowercase letter
+grav_admin_email: <EMAIL ADDRESS>  # Enter an email address for the grav_admin user
