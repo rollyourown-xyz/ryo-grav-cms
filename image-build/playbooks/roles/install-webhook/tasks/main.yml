@@ -1,0 +1,19 @@
+---
+- name: Make sure snapd is installed
+  apt:
+    name: snapd
+    update_cache: yes
+    state: present
+
+
+- name: Install webhook snap package
+  snap:
+    name: webhook
+    state: present
+
+
+- name: Prepare the webhook command
+  file:
+    src: /snap/bin/webhook
+    dest: /usr/bin/webhook
+    state: link

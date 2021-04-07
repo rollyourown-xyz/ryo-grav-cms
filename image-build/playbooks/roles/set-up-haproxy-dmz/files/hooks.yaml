@@ -1,0 +1,3 @@
+- id: reload-haproxy
+  execute-command: "/usr/local/bin/reload-haproxy.sh"
+  command-working-directory: "/var/webhook"

@@ -1,0 +1,11 @@
+[Unit]
+Description=Webhook
+Wants=network-online.target systemd-networkd-wait-online.service
+After=syslog.target network.target network-online.target systemd-networkd-wait-online.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/start-webhook.sh
+
+[Install]
+WantedBy=multi-user.target

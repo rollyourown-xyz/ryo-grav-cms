@@ -12,4 +12,5 @@
     - role: install-iptables
     - role: install-cron
     - role: install-haproxy
+    - role: install-webhook
     - role: set-up-haproxy-dmz

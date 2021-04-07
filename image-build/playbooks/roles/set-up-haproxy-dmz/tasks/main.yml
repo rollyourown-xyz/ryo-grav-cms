@@ -3,12 +3,12 @@
 # Copy iptables rules script (making executable)
 #
 - name: Copy firewall rules script
-  copy:
+  template:
     mode: 0770
     owner: root
     group: root
     dest: /usr/local/bin/iptables-rules.sh
-    src: iptables-rules.sh
+    src: iptables-rules.sh.j2
     force: yes
 
 
@@ -54,11 +54,77 @@
     force: yes
 
 
-# Add a cronjob to reload the HAProxy configuration every hour
+# Add a cronjob to reload the HAProxy configuration every day
 #
 - name: Add haproxy reload cronjob
   cron:
     name: "haproxy reload"
-    special_time: hourly
+    special_time: daily
     job: "systemctl reload haproxy"
     state: present
+
+
+# Create webhook working directory
+#
+- name: Create webhook working directory
+  file:
+    path: /var/webhook
+    state: directory
+    mode: '0755'
+
+
+# Copy webhook configuration
+#
+- name: Copy webhook configuration
+  copy:
+    mode: 0660
+    owner: root
+    group: root
+    dest: /usr/local/bin/hooks.yaml
+    src: hooks.yaml
+    force: yes
+
+
+# Copy haproxy reload script
+#
+- name: Copy haproxy reload script
+  copy:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /usr/local/bin/reload-haproxy.sh
+    src: reload-haproxy.sh
+    force: yes
+
+
+# Copy webhook start script
+#
+- name: Copy webhook start script
+  copy:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /usr/local/bin/start-webhook.sh
+    src: start-webhook.sh
+    force: yes
+
+
+# Copy webhook service definition
+#
+- name: Copy webhook service definition
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /lib/systemd/system/webhook.service
+    src: webhook.service
+    force: yes
+
+
+#Enable webhook service
+#
+- name: Enable webhook service
+  service:
+    name: webhook.service
+    enabled: yes
+    state: started
