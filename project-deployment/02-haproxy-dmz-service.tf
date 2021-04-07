@@ -1,5 +1,5 @@
-# Deployment of DMZ HAProxy for all services
-############################################
+# Deployment of DMZ HAProxy
+###########################
 
 module "deploy-haproxy-dmz" {
   source = "./modules/deploy-container-static-ip"
@@ -11,7 +11,7 @@ module "deploy-haproxy-dmz" {
   container_profiles         = ["default"]
   container_network          = "lxd-dmz"
   container_ipv4_address     = join(".", [ local.lxd_dmz_network_part, "10" ])
-  container_cloud-init_file  = "cloud-init/cloud-init-basic.yml"
+  container_cloud-init       = file("cloud-init/cloud-init-basic.yml")
 
   container_proxies = [
     {name = "proxy0", protocol = "tcp", listen = "80", connect = "80"},

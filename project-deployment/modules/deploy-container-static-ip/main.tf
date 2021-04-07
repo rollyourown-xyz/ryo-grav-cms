@@ -16,7 +16,7 @@ resource "lxd_container" "container" {
   
   config = { 
     "security.privileged": var.container_privileged
-    "user.user-data" = file(var.container_cloud-init_file)
+    "user.user-data" = var.container_cloud-init
   }
   
     device {

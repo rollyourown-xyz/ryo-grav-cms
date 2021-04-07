@@ -4,11 +4,11 @@ This module provisions a container with a static IP and optional proxy devices a
 
 * lxd_remote (string): The name of the remote lxd host to provision the container to. Must be configured as a remote for the local machine via lxc remote add
 
-* host_external_ipv4_address (string): The public IPv4 address of the lxd host. Needed to configure the proxy device"
+* host_external_ipv4_address (string): The public IPv4 address of the lxd host. Needed to configure a proxy device"
 
 * container_privileged (string): Whether to launch a privileged container. Default is false, so only need to specify if a privileged container is required
 
-* container_image (string): The name of the image to use to launch the container. This must be either a public, downloadable image or must exist on the remote host
+* container_image (string): The name of the image to use to launch the container. This must exist on the remote host
 
 * container_name (string): The name of the container. Must be unique
 
@@ -16,7 +16,7 @@ This module provisions a container with a static IP and optional proxy devices a
 
 * container_network (string): The network to launch the container into. This must be provisioned on the host
 
-* container_cloud-init_file (string): Path to the cloud-init file to pass to the container on launch
+* container_cloud-init (string): The cloud-init file to pass to the container on launch
 
 * container_ipv4_address (string): The IPv4 address for the container, which must be static and is required for proxy device configuration. Must be unique in the deployment and consistent with the network the container is launched in
 

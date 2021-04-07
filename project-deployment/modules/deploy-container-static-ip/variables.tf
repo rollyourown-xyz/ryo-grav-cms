@@ -39,9 +39,10 @@ variable "container_network" {
   default = "lxdbr0"
 }
 
-variable "container_cloud-init_file" {
+variable "container_cloud-init" {
   description = "cloud-init file to pass to the container on launch."
   type = string
+  sensitive = true
 }
 
 variable "container_ipv4_address" {
