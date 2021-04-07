@@ -42,17 +42,6 @@
     state: present
 
 
-# Create a directory for the grav installation
-#
-- name: Create a directory for the grav installation
-  file:
-    owner: www-data
-    group: www-data
-    mode: 0755
-    path: /var/www/grav
-    state: directory
-
-
 # Unarchive grav-admin archive (v{{ grav_version }})
 #
 - name: Download and unarchive grav-admin-v{{ grav_version }}
@@ -62,4 +51,4 @@
     mode: 0775
     src: "https://github.com/getgrav/grav/releases/download/{{ grav_version }}/grav-admin-v{{ grav_version }}.zip"
     dest: /var/www/
-    remote_src: no
+    remote_src: yes

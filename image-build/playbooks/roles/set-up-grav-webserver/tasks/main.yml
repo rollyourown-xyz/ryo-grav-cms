@@ -125,7 +125,7 @@
     mode: 0755
     owner: www-data
     group: www-data
-    dest: /usr/local/bootstrap/user
+    dest: /usr/local/bootstrap/
     src: /var/www/grav-admin/user
     remote_src: yes
     force: yes

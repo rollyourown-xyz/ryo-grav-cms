@@ -1,5 +1,5 @@
 # If the file "BOOTSRTAPPED" is not already present then run bootstrapping tasks
-if [ ! -f "/var/www/grav/user/BOOTSTRAPPED" ]; then
+if [ ! -f "/var/www/grav-admin/user/BOOTSTRAPPED" ]; then
 
   # Move the contents of the grav user directory into place
   mv /usr/local/bootstrap/user/* /var/www/grav-admin/user/
@@ -8,7 +8,7 @@ if [ ! -f "/var/www/grav/user/BOOTSTRAPPED" ]; then
   chown -R www-data:www-data /var/www/grav-admin/user
 
   # Add file BOOTSTRAPPED to indicate no further bootstrapping needed
-  touch  /var/www/grav/user/BOOTSTRAPPED
+  touch  /var/www/grav-admin/user/BOOTSTRAPPED
 
 fi
 
