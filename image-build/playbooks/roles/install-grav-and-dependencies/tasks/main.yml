@@ -1,0 +1,65 @@
+---
+
+# Install unzip
+#
+- name: Install unzip
+  apt:
+    name: unzip
+    update_cache: yes
+    state: present
+
+
+# Install supporting packages
+#
+- name: Install supporting packages
+  apt:
+    name:
+    - openssl
+    update_cache: yes
+    state: present
+
+
+# Install PHP and PHP Modules
+# Note: package 'php' is not installed, as this automatically installs apache
+# php-fpm is sufficient when nginx is used
+#
+- name: Install PHP and PHP Modules
+  apt:
+    name:
+    - php-fpm
+    - php-common
+    - php-curl
+    - php-xml
+    - php-dompdf
+    - php-gd
+    - php-json
+    - php-mbstring
+    - php-zip
+    - php-apcu
+    - php-opcache
+    - php-yaml
+    update_cache: yes
+    state: present
+
+
+# Create a directory for the grav installation
+#
+- name: Create a directory for the grav installation
+  file:
+    owner: www-data
+    group: www-data
+    mode: 0755
+    path: /var/www/grav
+    state: directory
+
+
+# Unarchive grav-admin archive (v{{ grav_version }})
+#
+- name: Download and unarchive grav-admin-v{{ grav_version }}
+  unarchive:
+    owner: www-data
+    group: www-data
+    mode: 0775
+    src: "https://github.com/getgrav/grav/releases/download/{{ grav_version }}/grav-admin-v{{ grav_version }}.zip"
+    dest: /var/www/
+    remote_src: no

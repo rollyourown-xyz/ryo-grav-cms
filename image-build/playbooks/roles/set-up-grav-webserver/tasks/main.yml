@@ -1,0 +1,148 @@
+---
+
+# Copy iptables rules script (making executable)
+#
+- name: Copy firewall rules script
+  copy:
+    mode: 0770
+    owner: root
+    group: root
+    dest: /usr/local/bin/iptables-rules.sh
+    src: iptables-rules.sh
+    force: yes
+
+
+# Copy firewall service definition
+#
+- name: Copy firewall service definition
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /lib/systemd/system/iptables-rules.service
+    src: iptables-rules.service
+    force: yes
+
+
+# Enable iptables rules service
+#
+- name: Enable firewall service
+  service:
+    name: iptables-rules.service
+    enabled: yes
+    state: started
+
+
+# Copy nginx config file
+#
+- name: Copy the nginx config file
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/nginx/nginx.conf
+    src: nginx.conf
+    force: yes
+
+
+# Copy the mime.types file
+#
+- name: Copy the mime.types file
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: /etc/nginx/mime.types
+    src: mime.types
+    force: yes
+
+
+# Fix against httpoxy vulnerability
+# Add line `fastcgi_param HTTP_PROXY "";` to /etc/nginx/fastcgi.conf
+#
+- name: Fix against httpoxy vulnerability 
+  lineinfile:
+    dest: /etc/nginx/fastcgi.conf
+    regexp: '^fastcgi_param HTTP_PROXY'
+    line: 'fastcgi_param HTTP_PROXY "";'
+    state: present
+
+
+# Copy NGINX sites-available file
+#
+- name: Copy nginx sites-available file
+  copy:
+    mode: 0644
+    owner: root
+    group: root
+    dest: "/etc/nginx/sites-available/grav"
+    src: nginx-sites-available
+    force: yes
+
+
+# Enable grav site in sites-enabled directory
+#
+- name: Enable grav in sites-enabled directory
+  file:
+    src: "/etc/nginx/sites-available/grav"
+    dest: "/etc/nginx/sites-enabled/grav"
+    state: link
+
+
+# Disable the nginx default site
+#
+- name: Disable the nginx default site
+  file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
+
+
+# Create directory for bootstrapping
+#
+- name: Create the /usr/local/bootstrap directory
+  file:
+    path: /usr/local/bootstrap
+    state: directory
+    mode: 0755
+
+
+# Copy grav bootstrap file
+#
+- name: Copy grav bootstrap file
+  copy:
+    mode: 0755
+    owner: root
+    group: root
+    dest: /usr/local/bootstrap/grav-bootstrap.sh
+    src: grav-bootstrap.sh
+    force: yes
+
+
+# Copy grav user directory to bootstrap directory
+- name: Copy grav user directory to bootstrap directory
+  copy: 0755
+  owner: www-data
+  group: www-data
+  dest: /usr/local/bootstrap/user
+  src: /var/www/grav-admin/user
+  remote_src: yes
+  force: yes
+
+
+# Remove the grav user directory
+#
+- name: Remove the grav user directory
+  file:
+    path: /var/www/grav-admin/user
+    state: absent
+
+
+# Add an empty grav user/config directory as mount point
+#
+- name: Add an empty grav user directory
+  file:
+    mode: 0755
+    owner: www-data
+    group: www-data
+    path: /var/www/grav/user
+    state: directory
