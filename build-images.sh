@@ -7,9 +7,9 @@ helpMessage()
    echo "Help: build-images.sh"
    echo "Usage: ./build-images.sh -v version -w webhook_version -g grav_version"
    echo "Flags:"
-   echo -e "-v version \t\tVersion stamp to apply to images, e.g. 20210101-1"
-   echo -e "-w webhook_version \tWebhook version to use when building the haproxy-dmz image, e.g. 2.8.0"
-   echo -e "-g grav_version \tGrav version to use when building the webserver image, e.g. 1.7.9"
+   echo -e "-v version \t\t(Mandatory) Version stamp to apply to images, e.g. 20210101-1"
+   echo -e "-w webhook_version \t(Optional) Webhook version to use for the haproxy-dmz image, e.g. 2.8.0 (default)"
+   echo -e "-g grav_version \t(Optional) Grav version to use for the webserver image, e.g. 1.7.10 (default)"
    echo -e "-h \t\t\tPrint this help message"
    echo ""
    exit 1
@@ -17,12 +17,16 @@ helpMessage()
 
 errorMessage()
 {
-   echo "Invalid option or input variables are missing"
+   echo "Invalid option or mandatory input variable is missing"
    echo "Use \"./build-images.sh -h\" for help"
    exit 1
 }
 
-while getopts v:g:h flag
+# Default webhook and grav versions
+webhook_version=2.8.0
+grav_version=1.7.10
+
+while getopts v:w:g:h flag
 do
     case "${flag}" in
         v) version=${OPTARG};;
