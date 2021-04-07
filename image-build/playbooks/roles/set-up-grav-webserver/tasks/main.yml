@@ -118,28 +118,28 @@
     force: yes
 
 
-# # Copy the site.yaml file
-# #
-# - name: Copy the site.yaml file
-#   copy:
-#     mode: 0664
-#     owner: www-data
-#     group: www-data
-#     dest: /var/www/grav-admin/user/config/site.yaml
-#     src: site.yaml
-#     force: yes
+# Copy the site.yaml file
+#
+- name: Copy the site.yaml file
+  copy:
+    mode: 0644
+    owner: www-data
+    group: www-data
+    dest: /var/www/grav-admin/user/config/site.yaml
+    src: site.yaml
+    force: yes
 
 
-# # Copy the footer twig file
-# #
-# - name: Copy the footer twig file
-#   copy:
-#     mode: 0644
-#     owner: www-data
-#     group: www-data
-#     dest: /var/www/grav-admin/user/themes/quark/templates/partials/footer.html.twig
-#     src: footer.html.twig
-#     force: yes
+# Copy the footer twig file
+#
+- name: Copy the footer twig file
+  copy:
+    mode: 0644
+    owner: www-data
+    group: www-data
+    dest: /var/www/grav-admin/user/themes/quark/templates/partials/footer.html.twig
+    src: footer.html.twig
+    force: yes
 
 
 # Copy the grav_admin account file
@@ -152,14 +152,6 @@
     dest: /var/www/grav-admin/user/accounts/grav_admin.yaml
     src: grav_admin.yaml.j2
     force: yes
-
-
-# # Add the grav_admin user
-# #
-# - name: Add the grav_admin user
-#   shell:
-#     chdir: /var/www/grav-admin
-#     cmd: 'bin/plugin login new-user -u grav_admin -p {{ grav_admin_password }} -e {{ grav_admin_email }} -P b -N "Grav Admin" -t "Administrator" -s enabled'
 
 
 # Copy grav user directory to bootstrap directory

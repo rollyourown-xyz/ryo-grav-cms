@@ -3,4 +3,4 @@ author:
   name: rollyourown.xyz
   email: 'joe@example.com'
 metadata:
-    description: 'Flat-file, open source CMS Grav - rolled by rollyourown.xyz'
+  description: 'Flat-file, open source CMS Grav - rolled by rollyourown.xyz'
