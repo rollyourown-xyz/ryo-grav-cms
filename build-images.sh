@@ -42,12 +42,12 @@ then
    errorMessage
 fi
 
-echo "Building images with version=$version and Grav version=$grav_version"
+echo "Building images with version $version, Webhook version $webhook_version and Grav version $grav_version"
 echo ""
 echo "Building HAProxy image"
 echo "Executing command: packer build -var \"version=$version\" -var \"webhook_version=$webhook_version\" image-build/haproxy-dmz.pkr.hcl"
 echo ""
-packer build -var "version=$version" image-build/haproxy-dmz.pkr.hcl
+packer build -var "version=$version" -var "webhook_version=$webhook_version" image-build/haproxy-dmz.pkr.hcl
 echo ""
 echo "Building Certbot image"
 echo "Executing command: packer build -var \"version=$version\" certbot.pkr.hcl"
