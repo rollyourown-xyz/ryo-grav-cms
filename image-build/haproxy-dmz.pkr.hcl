@@ -12,6 +12,12 @@ variable "version" {
   type        = string
 }
 
+# Specify the webhook version to use in the image build
+variable "webhook_version" {
+  description = "Mandatory: The webhook version to use in the image build."
+  type        = string
+}
+
 ## Local configuration variables
 ##
 
@@ -37,7 +43,7 @@ locals {
 
   build_inventory_file = "${abspath(path.root)}/playbooks/inventory.yml"
   build_playbook_file  = "${abspath(path.root)}/playbooks/provision-haproxy-dmz.yml"
-  build_extra_vars     = ""
+  build_extra_vars     = "webhook_version=${var.webhook_version}"
 }
 
 ## Computed local variables

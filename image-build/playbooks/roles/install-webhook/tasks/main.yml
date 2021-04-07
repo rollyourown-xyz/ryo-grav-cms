@@ -1,19 +1,32 @@
 ---
-- name: Make sure snapd is installed
-  apt:
-    name: snapd
-    update_cache: yes
-    state: present
+# Download and unarchive webhook archive (version {{ webhook_version }})
+#
+- name: Download and unarchive webhook v-{{ webhook_version }}
+  unarchive:
+    owner: root
+    group: root
+    mode: 0755
+    src: https://github.com/adnanh/webhook/releases/download/{{ webhook_version }}/webhook-linux-amd64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
 
 
-- name: Install webhook snap package
-  snap:
-    name: webhook
-    state: present
+# Copy webhook binary to /usr/local/bin
+#
+- name: Copy webhook binary to /usr/local/bin
+  copy:
+    owner: root
+    group: root
+    mode: 0755
+    src: /usr/local/bin/webhook-linux-amd64/webhook
+    remote_src: yes
+    dest: /usr/local/bin/webhook
+    force: yes
 
 
-- name: Prepare the webhook command
+# Remove unarchived webhook directory
+# 
+- name: Remove unarchived webhook directory
   file:
-    src: /snap/bin/webhook
-    dest: /usr/bin/webhook
-    state: link
+    path: /usr/local/bin/webhook-linux-amd64
+    state: absent
