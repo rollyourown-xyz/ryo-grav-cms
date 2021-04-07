@@ -53,10 +53,10 @@ echo "Building Certbot image"
 echo "Executing command: packer build -var \"version=$version\" certbot.pkr.hcl"
 echo ""
 packer build -var "version=$version" image-build/certbot.pkr.hcl
-# echo ""
-# echo "Building webserver image"
-# echo "Executing command: packer build -var \"version=$version\" -var \"grav_version=$grav_version\" webserver.pkr.hcl"
-# echo ""
-#packer build -var "version=$version" -var "grav_version=$grav_version" image-build/webserver.pkr.hcl
+echo ""
+echo "Building webserver image"
+echo "Executing command: packer build -var \"version=$version\" -var \"grav_version=$grav_version\" webserver.pkr.hcl"
+echo ""
+packer build -var "version=$version" -var "grav_version=$grav_version" image-build/webserver.pkr.hcl
 echo ""
 echo "Completed"
