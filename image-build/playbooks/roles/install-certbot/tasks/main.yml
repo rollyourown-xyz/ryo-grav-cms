@@ -5,7 +5,6 @@
     update_cache: no
     purge: yes
     state: absent
-  register: changes_made
 
 
 - name: Make sure snapd is installed
@@ -13,7 +12,6 @@
     name: snapd
     update_cache: yes
     state: present
-  register: changes_made
 
 
 - name: Install certbot snap package
@@ -21,7 +19,6 @@
     name: certbot
     classic: yes
     state: present
-  register: changes_made
 
 
 - name: Prepare the Certbot command
