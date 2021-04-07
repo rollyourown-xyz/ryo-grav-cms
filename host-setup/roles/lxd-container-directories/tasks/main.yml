@@ -15,7 +15,7 @@
 ## Directories for project-specific LXD container persistent storage
 ## -----------------------------------------------------------------
 
-### Certbot configuration directory
+### Certbot directory
 
 - name: Create a directory to mount in certbot containers
   file:
