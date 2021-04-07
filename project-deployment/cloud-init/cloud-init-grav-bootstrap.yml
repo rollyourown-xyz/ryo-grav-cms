@@ -1,0 +1,5 @@
+#cloud-config
+package_upgrade: false
+runcmd:
+  # Bootstrap grav deployment
+  - /usr/local/bootstrap/grav-bootstrap.sh
