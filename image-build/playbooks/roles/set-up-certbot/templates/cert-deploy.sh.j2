@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## HAProxy-terminated TLS
+#########################
+
+# Cat certificate and private key together for haproxy and copy to shared container directory
+cat /etc/letsencrypt/live/{{ project_domain_name }}/fullchain.pem /etc/letsencrypt/live/{{ project_domain_name }}/privkey.pem > /var/tls/haproxy/{{ project_domain_name }}.pem

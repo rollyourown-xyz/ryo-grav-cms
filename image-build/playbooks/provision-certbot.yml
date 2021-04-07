@@ -1,0 +1,14 @@
+---
+- name: Provision Certbot container image
+  hosts: packer
+
+  vars_files:
+    - "{{ playbook_dir }}/../../configuration/config_path.yml"
+    - "{{ host_config_path }}"
+    - "{{ project_config_path }}"
+
+  roles:
+    - role: upgrade-container
+    - role: install-iptables
+    - role: install-certbot
+    - role: set-up-certbot
