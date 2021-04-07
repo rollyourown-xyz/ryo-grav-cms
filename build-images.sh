@@ -42,11 +42,11 @@ echo "Building HAProxy image"
 echo "Executing command: packer build -var \"version=$version\" image-build/haproxy-dmz.pkr.hcl"
 echo ""
 packer build -var "version=$version" image-build/haproxy-dmz.pkr.hcl
-# echo ""
-# echo "Building Certbot image"
-# echo "Executing command: packer build -var \"version=$version\" certbot.pkr.hcl"
-# echo ""
-#packer build -var "version=$version" certbot.pkr.hcl
+echo ""
+echo "Building Certbot image"
+echo "Executing command: packer build -var \"version=$version\" certbot.pkr.hcl"
+echo ""
+packer build -var "version=$version" certbot.pkr.hcl
 # echo ""
 # echo "Building webserver image"
 # echo "Executing command: packer build -var \"version=$version\" -var \"grav_version=$grav_version\" webserver.pkr.hcl"
