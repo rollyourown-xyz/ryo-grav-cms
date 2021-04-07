@@ -32,4 +32,4 @@ $IPT -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
 ## TEMP: FOR TESTING Remove before publishing
 ## !!!!
 # Allow HAProxy Admin (TCP port 6080) from wireguard network only
-$IPT -A INPUT -p tcp -m tcp -s 10.0.15.0/24 --dport 6080 -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp -s 10.0.1.0/24 --dport 6080 -j ACCEPT
