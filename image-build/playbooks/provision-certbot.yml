@@ -3,7 +3,7 @@
   hosts: packer
 
   vars_files:
-    - "{{ playbook_dir }}/../configuration/config_path.yml"
+    - "{{ playbook_dir }}/../../configuration/config_path.yml"
     - "{{ configuration_path }}"
 
   roles:
