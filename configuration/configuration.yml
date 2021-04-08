@@ -56,8 +56,8 @@ project_domain_name: <DOMAIN>
 # Set a strong password for the grav_admin user - minimum 8 chars, at least one number, one uppercase and one lowercase letter
 grav_admin_password: <PASSWORD>
 
-# Enter an email address for the grav_admin user
-grav_admin_email: <EMAIL ADDRESS>
+# Enter an email address for the administrator of this project, this will be used for letsencrypt certificates and for the grav_admin user
+project_admin_email: <EMAIL ADDRESS>
 
 
 

@@ -3,4 +3,4 @@ CBT="/snap/bin/certbot"
 
 # Obtain certificates for the project domain
 # Deployment script for --deploy-hook is also provisioned in image creation
-$CBT certonly -n --standalone --agree-tos --preferred-challenges http --deploy-hook /usr/local/bin/cert-deploy.sh -m admin@{{ project_domain_name }} -d {{ project_domain_name }}
+$CBT certonly -n --standalone --agree-tos --preferred-challenges http --deploy-hook /usr/local/bin/cert-deploy.sh -m {{ project_admin_email }} -d {{ project_domain_name }}
