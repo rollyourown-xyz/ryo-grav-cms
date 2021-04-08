@@ -110,6 +110,8 @@
 
 - name: Run systemd-resolved script
   shell:
-    cmd: sudo /usr/local/bin/lxd-dns-settings-start.sh
+    cmd: /usr/local/bin/lxd-dns-settings-start.sh
+  become: yes
+  become_method: sudo
   when: dns_changes_made is changed
   
