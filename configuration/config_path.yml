@@ -1,4 +1,2 @@
 ---
-local_config_path: <PATH>    # Enter the path your local_configuration.yml file here
-host_config_path: <PATH>     # Enter the path your host_configuration.yml file here
-project_config_path: <PATH>  # Enter the path your project_configuration.yml file here
+configuration_path: ./configuration.yml   # Change this if the configuration.yml file is moved to another location

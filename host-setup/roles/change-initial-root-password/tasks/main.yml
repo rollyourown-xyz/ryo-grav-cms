@@ -1,7 +1,0 @@
----
-- name: Change root password
-  user:
-    name: "{{ host_root_user }}"
-    password: "{{ host_new_root_password | password_hash('sha512', host_new_root_password_salt) }}"
-    update_password: always
-    state: present

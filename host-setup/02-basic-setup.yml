@@ -4,8 +4,7 @@
   
   vars_files:
     - "{{ playbook_dir }}/../configuration/config_path.yml"
-    - "{{ local_config_path }}"
-    - "{{ host_config_path }}"
+    - "{{ configuration_path }}"
   
   vars:
     ansible_port: "{{ host_initial_ssh_port }}"

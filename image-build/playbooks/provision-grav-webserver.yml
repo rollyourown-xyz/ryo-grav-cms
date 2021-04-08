@@ -3,9 +3,8 @@
   hosts: packer
 
   vars_files:
-    - "{{ playbook_dir }}/../../configuration/config_path.yml"
-    - "{{ host_config_path }}"
-    - "{{ project_config_path }}"
+    - "{{ playbook_dir }}/../configuration/config_path.yml"
+    - "{{ configuration_path }}"
   
   roles:
     - role: upgrade-container
