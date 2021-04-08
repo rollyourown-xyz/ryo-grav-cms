@@ -1,2 +1,2 @@
 ---
-configuration_path: ./configuration.yml   # Change this if the configuration.yml file is moved to another location
+configuration_path: ~/ryo-projects/ryo-simple-blog-grav/configuration/configuration.yml   # Change this if the configuration.yml file is moved to another location

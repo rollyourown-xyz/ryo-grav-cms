@@ -43,7 +43,7 @@ host_non_root_user: <USER_NAME>
 host_non_root_user_password: <PASSWORD>
 host_non_root_password_salt: <SALT>
 
-# Add an LXD core trust password here 
+# Add an LXD core trust password here, can be generated, for example, with 'tr -dc A-Za-z0-9 </dev/urandom | head -c 12 ; echo ""'
 lxd_core_trust_password: <PASSWORD>
 
 
@@ -57,7 +57,7 @@ project_domain_name: <DOMAIN>
 grav_admin_password: <PASSWORD>
 
 # Enter an email address for the grav_admin user
-grav_admin_email: <EMAIL ADDRESS>  
+grav_admin_email: <EMAIL ADDRESS>
 
 
 
