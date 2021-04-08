@@ -1,5 +1,5 @@
 ---
-- name: Remove local machine as LXD remote on host if already present
+- name: Remove host as LXD remote on local machine if already present
   shell:
     cmd: 'lxc remote remove {{ host_hostname }}'
   become: yes
