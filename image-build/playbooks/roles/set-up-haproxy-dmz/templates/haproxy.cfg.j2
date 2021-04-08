@@ -40,29 +40,6 @@ defaults
    errorfile 504 /etc/haproxy/errors/504.http
 
 
-## Listeners
-############
-
-## !!!!
-## TEMP: FOR TESTING Remove before publishing
-## !!!!
-# HAProxy Admin
-listen stats
-   bind :::6080 v4v6
-   mode http
-   stats enable
-   stats hide-version
-   stats uri /
-   stats realm HAProxy\ Stats
-   stats auth admin:poocrumpet
-   stats admin if TRUE
-   stats refresh 5s
-   stats show-legends
-## !!!!
-## TEMP: FOR TESTING Remove before publishing
-## !!!!
-
-
 ## Frontends
 ############
 
