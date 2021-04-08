@@ -23,15 +23,9 @@ Rollyourown.xyz project repository for a simple blog server using grav.
         Temporary, with public key for cloning to test VM
         git clone ssh://gitea@git.rollyourown.xyz:3022/ryo-projects/ryo-simple-blog-grav.git
 
-3. Copy the example project configuration files to a directory outside of the project directory structure, add settings and then add the paths to the configuration files to `~/ryo-projects/ryo-simple-blog-grav/configuration/config_path.yml`
+3. Add settings to the project's configuration file
 
-        cp ~/ryo-projects/ryo-simple-blog-grav/configuration/example_local_configuration.yml ~/local_configuration.yml
-        cp ~/ryo-projects/ryo-simple-blog-grav/configuration/example_host_configuration.yml ~/host_configuration.yml
-        cp ~/ryo-projects/ryo-simple-blog-grav/configuration/example_project_configuration.yml ~/project_configuration.yml
-        nano ~/local_configuration.yml
-        nano ~/host_configuration.yml
-        nano ~/project_configuration.yml
-        nano ~/ryo-projects/ryo-simple-blog-grav/configuration/config_path.yml
+        nano ~/ryo-projects/ryo-simple-blog-grav/configuration/configuration.yml
 
 4. Add the host public IP address to the inventory `~/ryo-projects/ryo-simple-blog-grav/configuration/inventory.ini`
 
