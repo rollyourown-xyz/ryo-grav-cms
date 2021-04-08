@@ -7,10 +7,14 @@
   ignore_errors: yes
 
 
-- name: Clear any previous remote host certificate on local machine
+- name: Clear any previous LXD certificates on local machine
   file:
     path: "/home/{{ local_non_root_user }}/.config/lxc/servercerts/{{ host_hostname }}.pem"
     state: absent
+  with_items:
+    - "/home/{{ local_non_root_user }}/.config/lxc/servercerts/{{ host_hostname }}.pem"
+    - /var/snap/lxd/common/lxd/server.crt
+    - /var/snap/lxd/common/lxd/server.key
 
 
 - name: Add host as LXD remote on local machine
