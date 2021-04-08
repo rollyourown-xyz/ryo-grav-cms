@@ -1,4 +1,18 @@
 ---
+- name: Remove local machine as LXD remote on host if already present
+  shell:
+    cmd: 'lxc remote remove {{ host_hostname }}'
+  become: yes
+  become_user: "{{ local_non_root_user }}"
+  ignore_errors: yes
+
+
+- name: Clear any previous remote host certificate on local machine
+  file:
+    path: "/home/{{ local_non_root_user }}/.config/lxc/servercerts/{{ host_hostname }}.pem"
+    state: absent
+
+
 - name: Add host as LXD remote on local machine
   shell:
     cmd: 'lxc remote add {{ host_hostname }} {{ host_wireguard_address }} --accept-certificate=true --auth-type="tls" --password="{{ lxd_core_trust_password }}" --public=false'
