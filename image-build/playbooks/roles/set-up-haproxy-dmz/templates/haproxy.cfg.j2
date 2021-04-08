@@ -73,9 +73,22 @@ frontend http_80
    option http-server-close
    http-request set-header X-Forwarded-Proto https if { ssl_fc }
    http-request set-header X-Forwarded-Proto http if !{ ssl_fc }
+
+   # Letsencrypt certificate renewal
    acl letsencrypt-request path_beg -i /.well-known/acme-challenge/
+
+   # Project domain traffic
+   acl project-domain hdr(host) -i {{ project_domain_name }}
+
+   # Letsencrypt backend rules
    use_backend letsencrypt_80 if letsencrypt-request
+
+   # Project domain backend rules
+   use_backend webserver if project-domain
+
+   # default backend rule
    default_backend default
+
 
 # HTTPS front-end
 frontend http_443
