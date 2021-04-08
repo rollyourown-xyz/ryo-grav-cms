@@ -7,6 +7,12 @@
   ignore_errors: yes
 
 
+- name: Clear any previous local machine certificate on host
+  file:
+    path: "/home/{{ host_non_root_user }}/.config/lxc/servercerts/control.pem"
+    state: absent
+
+
 - name: Add local machine as LXD remote on host
   shell:
     cmd: 'lxc remote add control {{ host_wireguard_address_range | replace("0/24", "2") }} --accept-certificate=true --auth-type="tls" --password="{{ lxd_core_trust_password }}" --public=false'
