@@ -31,19 +31,24 @@ Rollyourown.xyz project repository for a simple blog server using grav.
 
         nano ~/ryo-projects/ryo-simple-blog-grav/configuration/inventory.ini
 
-5. Enter the project directory and run the local setup script
+5. Change the path to the configuration file in config_path.yml **if** you have moved the configuration file **or** are not using the working directory `ryo-projects` as above
+
+6. Run the local setup script from the project directory
 
         cd ~/ryo-projects/ryo-simple-blog-grav
         ./local-setup.sh
 
-6. Run the host setup script
+7. Run the host setup script from the project directory
 
+        cd ~/ryo-projects/ryo-simple-blog-grav
         ./host-setup.sh
 
-7. Run the image build script
+8. Run the image build script from the project directory
 
+        cd ~/ryo-projects/ryo-simple-blog-grav
         ./build-images.sh -v <VERSION> -w <WEBHOOK VERSION, OPTIONAL> -g <GRAV VERSION, OPTIONAL>
 
-8. Run the deployment script
+9. Run the deployment script from the project directory
 
+        cd ~/ryo-projects/ryo-simple-blog-grav
         ./deploy-project.sh -v <VERSION>
