@@ -2,7 +2,7 @@
 
 **NEEDS COMPLETING / TIDYING UP AFTER PROJECT WEB PAGES ARE WRITTEN**
 
-Rollyourown.xyz project repository for a grav content management system.
+Rollyourown.xyz project repository for a Grav content management system.
 
 ## How to use
 
