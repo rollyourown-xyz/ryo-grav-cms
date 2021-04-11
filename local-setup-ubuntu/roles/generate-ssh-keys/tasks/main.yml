@@ -8,7 +8,7 @@
 
 - name: Generate SSH keys
   openssh_keypair:
-    path: "/home/{{ local_non_root_user }}/.ssh/id_ssh_rsa"
+    path: "/home/{{ local_non_root_user }}/.ssh/ryo_id_ssh_rsa"
     owner: "{{ local_non_root_user }}"
     group: "{{ local_non_root_user }}"
     type: rsa
