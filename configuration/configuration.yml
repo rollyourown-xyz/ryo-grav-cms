@@ -46,6 +46,9 @@ host_non_root_password_salt: <SALT>
 # Add an LXD core trust password here, can be generated, for example, with 'tr -dc A-Za-z0-9 </dev/urandom | head -c 12 ; echo ""'
 lxd_core_trust_password: <PASSWORD>
 
+# Change according to the available storage on the host. Set to leave at least ~4GB for the operating system
+lxd_storage_pool_size: 50GB
+
 
 # Project configuration
 #----------------------
@@ -112,9 +115,6 @@ host_wireguard_configuration_file: /home/{{ local_non_root_user }}/ryo-host.conf
 
 # Default host LXD configuration
 #-------------------------------
-
-# Change according to the available storage on the host
-lxd_storage_pool_size: 50GB
 
 # Leave as default or change according to preference
 lxd_br0_ip_addr: '10.10.1.1/24'
