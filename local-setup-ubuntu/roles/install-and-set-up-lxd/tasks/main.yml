@@ -30,6 +30,7 @@
 - name: Make sure LXD snap package is installed
   snap:
     name: lxd
+    channel: 4.1/stable
     state: present
   when: install_local_lxd
 

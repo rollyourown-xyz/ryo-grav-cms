@@ -32,6 +32,7 @@
 - name: Make sure LXD snap package is installed
   snap:
     name: lxd
+    channel: 4.1/stable
     state: present
   register: changes_made
 
