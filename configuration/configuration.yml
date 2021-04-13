@@ -10,7 +10,7 @@
 # Local user configuration
 #-------------------------
 
-# Enter your non-root username for this machine
+# Enter your non-root username for this machine (note: the user must be a member of the sudo group - `useradd <username> sudo` if not already a sudo user)
 local_non_root_user: <USER_NAME>
 
 # SECRET: Enter your non-root user password for this machine
