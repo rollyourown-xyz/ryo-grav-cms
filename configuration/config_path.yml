@@ -1,3 +1,3 @@
 ---
 # Change this if the configuration.yml file is moved to another location or the project's directory is different to ~/ryo-projects/ryo-simple-blog-grav
-configuration_path: ~/ryo-projects/ryo-simple-blog-grav/configuration/configuration.yml
+configuration_path: ~/ryo-projects/ryo-grav-cms/configuration/configuration.yml
