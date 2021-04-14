@@ -6,13 +6,10 @@ config:
 
 # Storage pools
 storage_pools:
-- name: lxd
+- config: {}
   description: ""
-  driver: zfs
-  config:     
-    size: 10GB
-    source: /var/snap/lxd/common/lxd/disks/lxd.img
-    zfs.pool_name: lxd
+  name: default
+  driver: dir
 
 # Network devices
 networks:
@@ -21,12 +18,8 @@ networks:
   type: bridge
   managed: true
   config:
-    ipv4.address: '172.16.10.1/24'
-    ipv4.dhcp.expiry: 5m
-    ipv4.nat: "true"
+    ipv4.address: auto
     ipv6.address: none
-    dns.mode: managed
-    dns.domain: lxd
 
 # Profiles
 profiles:
@@ -39,5 +32,8 @@ profiles:
       type: nic
     root:
       path: /
-      pool: lxd
+      pool: default
       type: disk
+  config: {}
+
+cluster: null
