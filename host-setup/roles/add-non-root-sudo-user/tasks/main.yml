@@ -11,6 +11,15 @@
     state: present
 
 
+- name: Create the non-root user .ssh directory, if not present
+  file:
+    mode: 0700
+    owner: "{{ host_non_root_user }}"
+    group: "{{ host_non_root_user }}"
+    path: "/home/{{ host_non_root_user }}/.ssh"
+    state: directory
+
+
 - name: Add SSH public keys for non-root user
   authorized_key:
     user: "{{ host_non_root_user }}"

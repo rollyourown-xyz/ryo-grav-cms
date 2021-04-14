@@ -1,0 +1,26 @@
+---
+- name: Install openssh-client
+  apt:
+    name: openssh-client
+    update_cache: yes
+    state: present
+  when: generate_ssh_keys
+
+
+- name: Create the non-root user .ssh directory, if not present
+  file:
+    mode: 0700
+    owner: "{{ local_non_root_user }}"
+    group: "{{ local_non_root_user }}"
+    path: "/home/{{ local_non_root_user }}/.ssh"
+    state: directory
+
+
+- name: Generate SSH keys
+  openssh_keypair:
+    path: "/home/{{ local_non_root_user }}/.ssh/ryo_id_ssh_rsa"
+    owner: "{{ local_non_root_user }}"
+    group: "{{ local_non_root_user }}"
+    type: rsa
+    state: present
+  when: generate_ssh_keys

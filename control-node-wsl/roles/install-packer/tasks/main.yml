@@ -1,0 +1,22 @@
+---
+- name: Add HashiCorp GPG key
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+  when: install_local_packer
+
+
+- name: Add HashiCorp repository
+  apt_repository:
+    repo: 'deb https://apt.releases.hashicorp.com focal main'
+    state: present
+    update_cache: yes
+  when: install_local_packer
+
+
+- name: Install packer
+  apt:
+    name: packer
+    update_cache: yes
+    state: present
+  when: install_local_packer

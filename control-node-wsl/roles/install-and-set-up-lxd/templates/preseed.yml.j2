@@ -1,0 +1,43 @@
+# Daemon settings
+config:
+  core.https_address: '{{ host_wireguard_address_range | replace("0/24", "2") }}:8443'
+  core.trust_password: {{ lxd_core_trust_password }}
+  images.auto_update_interval: 6
+
+# Storage pools
+storage_pools:
+- name: lxd
+  description: ""
+  driver: zfs
+  config:     
+    size: 10GB
+    source: /var/snap/lxd/common/lxd/disks/lxd.img
+    zfs.pool_name: lxd
+
+# Network devices
+networks:
+- name: lxdbr0
+  description: ""
+  type: bridge
+  managed: true
+  config:
+    ipv4.address: '172.16.10.1/24'
+    ipv4.dhcp.expiry: 5m
+    ipv4.nat: "true"
+    ipv6.address: none
+    dns.mode: managed
+    dns.domain: lxd
+
+# Profiles
+profiles:
+- name: default
+  description: Default LXD profile
+  devices:
+    eth0:
+      name: eth0
+      network: lxdbr0
+      type: nic
+    root:
+      path: /
+      pool: lxd
+      type: disk

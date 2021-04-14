@@ -1,0 +1,8 @@
+---
+- name: Install sshpass
+  apt:
+    name: sshpass
+    update_cache: yes
+    state: present
+  when: install_local_wireguard
+  
