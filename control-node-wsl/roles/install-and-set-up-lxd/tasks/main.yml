@@ -39,7 +39,7 @@
   user:
     name: "{{ local_non_root_user }}"
     groups:
-     - lxd
+      - lxd
     append: yes
     state: present
   when: install_local_lxd
