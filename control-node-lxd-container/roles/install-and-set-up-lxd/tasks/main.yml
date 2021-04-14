@@ -9,7 +9,7 @@
 
 - name: Copy LXD preseed file from template
   template:
-    mode: 0640
+    mode: 0644
     owner: "{{ local_non_root_user }}"
     group: "{{ local_non_root_user }}"
     dest: /home/{{ local_non_root_user }}/preseed.yml
@@ -21,12 +21,14 @@
 
 - name: Initialise LXD with preseed file
   shell:
-    cmd: lxd init --preseed < /home/{{ local_non_root_user }}/preseed.yml
+    cmd: cat /home/{{ local_non_root_user }}/preseed.yml | lxd init --preseed
+  become: yes
+  become_method: sudo
   when:
     - lxd_preseed_changes_made is changed
 
 
-    - name: Add ubuntu-minimal LXD remote
+- name: Add ubuntu-minimal LXD remote
   shell:
     cmd: 'lxc remote add --protocol="simplestreams" ubuntu-minimal https://cloud-images.ubuntu.com/minimal/releases/'
   become: yes
