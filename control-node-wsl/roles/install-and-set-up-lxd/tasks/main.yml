@@ -30,7 +30,7 @@
 - name: Make sure LXD snap package is installed
   snap:
     name: lxd
-    channel: 4.1/stable
+    channel: 4.0/stable
     state: present
   when: install_local_lxd
 
@@ -38,7 +38,8 @@
 - name: Add non-root user to the lxd group
   user:
     name: "{{ local_non_root_user }}"
-    groups: lxd
+    groups:
+     - lxd
     append: yes
     state: present
   when: install_local_lxd
