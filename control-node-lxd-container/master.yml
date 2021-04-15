@@ -1,4 +1,8 @@
 ---
+## Note: LXD container control node is not currently used / supported for rollyourown.xyz projects
+## Container nesting (LXD containers used in image build process within the LXC container control node)
+## is not reliable - for example snapd cannot install snaps within a nested container
+
 - name: Set up local machine
   hosts: local
   
