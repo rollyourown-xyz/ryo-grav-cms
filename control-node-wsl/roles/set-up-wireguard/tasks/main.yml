@@ -57,9 +57,9 @@
   when: set_up_local_wireguard
 
 
-- name: Enable wireguard interface ryo-local as service
-  service:
-    name: wg-quick@ryo-local
-    enabled: yes
-    state: restarted
-  when: set_up_local_wireguard
+#- name: Enable wireguard interface ryo-local as service
+#  service:
+#    name: wg-quick@ryo-local
+#    enabled: yes
+#    state: restarted
+#  when: set_up_local_wireguard
