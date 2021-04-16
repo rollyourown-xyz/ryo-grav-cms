@@ -109,7 +109,7 @@ install_local_terraform: true
 #---------------------------
 
 # Leave as default or change according to preference
-host_hostname: rollyourown
+host_hostname: ryo-grav-cms
 
 # Leave as default or change according to preference
 host_new_ssh_port: 2222
