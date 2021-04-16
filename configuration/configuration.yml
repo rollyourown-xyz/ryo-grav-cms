@@ -17,7 +17,8 @@
 # - `useradd <username> sudo` if not already a sudo user)
 local_non_root_user: <USER_NAME>
 
-# SECRET: Enter your non-root user password for this machine
+# SECRET: Enter your non-root user password for this machine. Enter "" if
+# no password is required (e.g. with a Multipass VM)
 local_non_root_user_password: <PASSWORD>
 
 
