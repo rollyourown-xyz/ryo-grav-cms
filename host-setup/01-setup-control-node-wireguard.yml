@@ -10,14 +10,6 @@
     ansible_user: "{{ local_non_root_user }}"
     ansible_become: yes
     ansible_become_password: "{{ local_non_root_user_password }}"
-    #
-    # Control node configuration switches - do not change unless you know what you are doing
-    generate_ssh_keys: true
-    install_wireguard: true
-    set_up_wireguard: true
-    install_lxd: true
-    install_packer: true
-    install_terraform: true
 
   roles:
     - role: set-up-wireguard-control-node
