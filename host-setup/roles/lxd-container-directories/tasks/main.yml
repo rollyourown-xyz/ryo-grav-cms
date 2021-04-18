@@ -4,22 +4,29 @@
 
 ## Create directories on host to be mounted in containers
 
-- name: Create a directory to container mounts for containers
+- name: Create a directory for container mounts
   file:
-    path: /var/container-directories
+    path: /var/containers
     state: directory
     mode: '0755'
-
 
 
 ## Directories for project-specific LXD container persistent storage
 ## -----------------------------------------------------------------
 
+## Create directory for project containers
+
+- name: Create a directory for container mounts for this project
+  file:
+    path: /var/containers/ryo-grav-cms
+    state: directory
+    mode: '0755'
+
 ### Certbot directory
 
 - name: Create a directory to mount in certbot containers
   file:
-    path: /var/container-directories/certbot
+    path: /var/containers/ryo-grav-cms/certbot
     state: directory
     mode: '0755'
 
@@ -28,7 +35,7 @@
 
 - name: Create a directory to mount in containers needing TLS certificates
   file:
-    path: /var/container-directories/tls
+    path: /var/containers/ryo-grav-cms/tls
     state: directory
     mode: '0755'
 
@@ -37,7 +44,7 @@
 
 - name: Create a directory to mount in HAProxy containers needing TLS certificates
   file:
-    path: /var/container-directories/tls/haproxy
+    path: /var/containers/ryo-grav-cms/tls/haproxy
     state: directory
     mode: '0755'
 
@@ -46,12 +53,12 @@
 
 - name: Create a directory for website content
   file:
-    path: /var/container-directories/website
+    path: /var/containers/ryo-grav-cms/website
     state: directory
     mode: '0755'
 
 - name: Create a directory for grav content
   file:
-    path: /var/container-directories/website/grav
+    path: /var/containers/ryo-grav-cms/website/grav
     state: directory
     mode: '0755'

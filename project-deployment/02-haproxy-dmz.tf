@@ -19,6 +19,6 @@ module "deploy-haproxy-dmz" {
   ]
 
   container_mounts = [
-    {name = "haproxy-ssl", host_path = "/var/container-directories/tls/haproxy", mount_path = "/etc/haproxy/ssl", mount_readonly = true}
+    {name = "haproxy-ssl", host_path = "/var/containers/ryo-grav-cms/tls/haproxy", mount_path = "/etc/haproxy/ssl", mount_readonly = true}
   ]
 }

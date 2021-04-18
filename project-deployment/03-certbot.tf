@@ -14,7 +14,7 @@ module "deploy-certbot" {
   container_cloud-init       = file("cloud-init/cloud-init-certbot.yml")
   
   container_mounts = [
-    {name = "certbot-config", host_path = "/var/container-directories/certbot", mount_path = "/etc/letsencrypt", mount_readonly = false},
-    {name = "certbot-tls", host_path = "/var/container-directories/tls", mount_path = "/var/tls", mount_readonly = false}
+    {name = "certbot-config", host_path = "/var/containers/ryo-grav-cms/certbot", mount_path = "/etc/letsencrypt", mount_readonly = false},
+    {name = "certbot-tls", host_path = "/var/containers/ryo-grav-cms/tls", mount_path = "/var/tls", mount_readonly = false}
   ]
 }

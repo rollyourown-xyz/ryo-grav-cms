@@ -12,6 +12,6 @@ module "deploy-webserver" {
   container_cloud-init       = file("cloud-init/cloud-init-grav-bootstrap.yml")
   
   container_mounts = [
-    {name = "grav-user", host_path = "/var/container-directories/website/grav", mount_path = "/var/www/grav-admin/user", mount_readonly = false}
+    {name = "grav-user", host_path = "/var/containers/ryo-grav-cms/website/grav", mount_path = "/var/www/grav-admin/user", mount_readonly = false}
   ]
 }
