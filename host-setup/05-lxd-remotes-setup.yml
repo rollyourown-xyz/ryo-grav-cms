@@ -3,8 +3,8 @@
   hosts: local
   
   vars_files:
-    - "{{ playbook_dir }}/../configuration/config_path.yml"
-    - "{{ configuration_path }}"
+    - "{{ playbook_dir }}/../../ryo-control-node/configuration/configuration.yml"
+    - "{{ playbook_dir }}/../configuration/configuration.yml"
   
   vars:
     ansible_user: "{{ local_non_root_user }}"
@@ -19,8 +19,8 @@
   hosts: host_wireguard_ip
   
   vars_files:
-    - "{{ playbook_dir }}/../configuration/config_path.yml"
-    - "{{ configuration_path }}"
+    - "{{ playbook_dir }}/../../ryo-control-node/configuration/configuration.yml"
+    - "{{ playbook_dir }}/../configuration/configuration.yml"
   
   vars:
     ansible_port: "{{ host_new_ssh_port }}"

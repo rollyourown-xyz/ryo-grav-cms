@@ -1,10 +1,9 @@
 ---
-- name: Set up LXD on the host
+- name: Create a self-signed SSL cert for first-time haproxy start
   hosts: host_wireguard_ip
   
   vars_files:
-    - "{{ playbook_dir }}/../configuration/config_path.yml"
-    - "{{ configuration_path }}"
+    - "{{ playbook_dir }}/../configuration/configuration.yml"
   
   vars:
     ansible_port: "{{ host_new_ssh_port }}"
@@ -17,7 +16,4 @@
     transfer_method: scp  
   
   roles:
-    - role: lxd-setup
-    - role: lxd-tune-host
-    - role: lxd-container-directories
-    - role: reboot-host
+    - role: self-signed-cert

@@ -3,8 +3,7 @@
   hosts: host_public_ip
   
   vars_files:
-    - "{{ playbook_dir }}/../configuration/config_path.yml"
-    - "{{ configuration_path }}"
+    - "{{ playbook_dir }}/../configuration/configuration.yml"
   
   vars:
     ansible_port: "{{ host_initial_ssh_port }}"
@@ -22,8 +21,7 @@
   hosts: host_public_ip
   
   vars_files:
-    - "{{ playbook_dir }}/../configuration/config_path.yml"
-    - "{{ configuration_path }}"
+    - "{{ playbook_dir }}/../configuration/configuration.yml"
   
   vars:
     ansible_port: "{{ host_initial_ssh_port }}"
@@ -37,4 +35,4 @@
   roles:
     - role: system-upgrade
     - role: install-wireguard
-    - role: set-up-wireguard
+    - role: set-up-wireguard-host
