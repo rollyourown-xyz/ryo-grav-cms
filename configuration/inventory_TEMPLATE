@@ -3,10 +3,6 @@
 [host_public_ip]
 <IP ADDRESS>
 
-# Change if necessary to match the config parameter host_wireguard_address in host_configuration.yml
-[host_wireguard_ip]
-10.0.1.1
-
 # DO NOT CHANGE, DO NOT REMOVE
 [local]
 127.0.0.1   ansible_connection=local    ansible_python_interpreter="{{ansible_playbook_python}}"
