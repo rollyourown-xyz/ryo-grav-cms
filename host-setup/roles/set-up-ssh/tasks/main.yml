@@ -17,7 +17,7 @@
     update_cache: yes
     state: present
   register: changes_made
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator
 
 
 # Copy .google-authenticator configuration file for non-root user if the value of the variable
@@ -29,10 +29,10 @@
     owner: "{{ host_non_root_user }}"
     group: "{{ host_non_root_user }}"
     dest: "/home/{{ host_non_root_user }}/.google_authenticator"
-    src: "{{ host_non_root_user_google_authenticator_file }}"
+    src: "{{ local_non_root_user_google_authenticator_file }}"
     force: yes
   register: changes_made
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@
     path: /etc/ssh/sshd_config
     regexp: '^(# *)?ChallengeResponseAuthentication'
     line: 'ChallengeResponseAuthentication no'
-  when: not host_non_root_use_google_authenticator
+  when: not local_non_root_use_google_authenticator
 
 
 # Set ChallengeResponseAuthentication in SSH config file (2FA)
@@ -93,7 +93,7 @@
     path: /etc/ssh/sshd_config
     regexp: '^(# *)?ChallengeResponseAuthentication'
     line: 'ChallengeResponseAuthentication yes'
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator
 
 
 # Set authentication methods for 2FA
@@ -103,7 +103,7 @@
     path: /etc/ssh/sshd_config
     insertafter: '^UsePAM yes'
     line: 'AuthenticationMethods publickey,password publickey,keyboard-interactive'
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator
 
 
 # Allow 2FA-less login via wireguard interface (2FA)
@@ -117,7 +117,7 @@
       Match Address {{ host_wireguard_address_range }}
         AuthenticationMethods publickey
     state: present
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator
 
 
 # Set PAM to use pam_google_authenticator (2FA) 
@@ -126,7 +126,7 @@
   lineinfile:
     path: /etc/pam.d/sshd
     line: 'auth required pam_google_authenticator.so'
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator
 
 
 # Exclude common-auth (2FA) 
@@ -136,4 +136,4 @@
     path: /etc/pam.d/sshd
     regexp: '^@include common-auth'
     line: '# @include common-auth'
-  when: host_non_root_use_google_authenticator
+  when: local_non_root_use_google_authenticator

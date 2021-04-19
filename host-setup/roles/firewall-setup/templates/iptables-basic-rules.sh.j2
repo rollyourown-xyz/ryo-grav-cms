@@ -29,7 +29,7 @@ $IPT -A INPUT -p tcp -m tcp --dport {{ host_new_ssh_port }} -j ACCEPT
 $IPT -A INPUT -p udp -m udp --dport {{ host_wireguard_port }} -j ACCEPT
 
 # Allow LXD remote connections on wireguard network
-$IPT -A INPUT -p tcp -m tcp --dport 8443 -s {{ host_wireguard_address_range }} -d {{ host_wireguard_address }}/32 -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp --dport 8443 -s {{ wireguard_address_network_part }}.0/24 -d {{ wireguard_address_network_part }}.2/32 -j ACCEPT
 
 
 ## Rules for LXD networks

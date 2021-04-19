@@ -35,7 +35,7 @@
     mode: 644
     owner: root
     group: root
-    dest: "/home/{{ local_non_root_user }}/ryo-host.conf"
+    dest: "{{ playbook_dir }}/../configuration/{{ host_hostname }}.conf"
     src: ryo-host.conf.j2
     force: yes
 

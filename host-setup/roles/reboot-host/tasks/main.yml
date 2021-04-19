@@ -13,7 +13,7 @@
 
 - name: Change ansible IP address in the task
   set_fact:
-    ansible_ssh_host: "{{ host_wireguard_address }}"
+    ansible_ssh_host: "{{ wireguard_address_network_part }}.2"
     ansible_ssh_port: "{{ host_new_ssh_port }}"
   when: changes_made is changed
 

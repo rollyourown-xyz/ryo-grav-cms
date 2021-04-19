@@ -1,6 +1,6 @@
 ---
 - name: Create a self-signed SSL cert for first-time haproxy start
-  hosts: host_wireguard_ip
+  hosts: "{{ wireguard_address_network_part }}.2"
   
   vars_files:
     - "{{ playbook_dir }}/../configuration/configuration.yml"
