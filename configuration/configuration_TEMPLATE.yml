@@ -19,39 +19,6 @@ host_public_ip: <IP ADDRESS>
 # Set the default SSH port, as provided by your server hosting provider
 host_initial_ssh_port: 22
 
-
-# Host wireguard configuration
-#-----------------------------
-
-# Leave the following settings as default if this is the first project managed
-# by the control node. Change if other projects are already deployed on the control node
-# Make sure that these settings do not overlap with any other project - e.g. if
-# other projects managed by the control node use "10.0.1"  and "10.0.2", then
-# set this to "10.0.3" and also change this value in the project inventory file
-wireguard_address_network_part: "10.0.1"
-
-
-# Host LXD configuration
-#-----------------------------
-
-# Leave the following settings as default if this is the first project managed
-# by the control node. Change if other projects are already deployed on the control node
-# Make sure that these settings do not overlap with any other project - e.g. if
-# another project managed by the control node uses "10.10.0", "10.10.10", "10.10.11" and "10.10.12", then
-# set these to "10.11.0", "10.11.10", "10.11.11" and "10.11.12"
-lxd_br0_network_part: "10.10.0"
-lxd_dmz_network_part: "10.10.10"
-lxd_frontend_network_part: "10.10.11"
-lxd_backend_network_part: "10.10.12"
-
-# Change according to the available storage on the host. 
-# Set to leave at least 4GB for the operating system
-lxd_storage_pool_size: 50GB
-
-
-# Host user configuration
-#------------------------
-
 # Set the default root username here (probably 'root'), as provided by 
 # your server hosting provider
 host_root_user: root
@@ -83,10 +50,38 @@ grav_admin_password: <PASSWORD>
 project_admin_email: <EMAIL ADDRESS>
 
 
-
 #----------------------------------------------------------------------------
 # DEFAULT Configuration - leave as default unless you know what you are doing
 #----------------------------------------------------------------------------
+
+# Host wireguard configuration
+#-----------------------------
+
+# Leave the following settings as default if this is the first project managed
+# by the control node. Change if other projects are already deployed on the control node
+# Make sure that these settings do not overlap with any other project - e.g. if
+# other projects managed by the control node use "10.0.1"  and "10.0.2", then
+# set this to "10.0.3" and also change this value in the project inventory file
+wireguard_address_network_part: "10.0.1"
+
+
+# Host LXD configuration
+#-----------------------------
+
+# Leave the following settings as default if this is the first project managed
+# by the control node. Change if other projects are already deployed on the control node
+# Make sure that these settings do not overlap with any other project - e.g. if
+# another project managed by the control node uses "10.10.0", "10.10.10", "10.10.11" and "10.10.12", then
+# set these to "10.11.0", "10.11.10", "10.11.11" and "10.11.12"
+lxd_br0_network_part: "10.10.0"
+lxd_dmz_network_part: "10.10.10"
+lxd_frontend_network_part: "10.10.11"
+lxd_backend_network_part: "10.10.12"
+
+# Change according to the available storage on the host. 
+# Set to leave at least 4GB for the operating system
+lxd_storage_pool_size: 50GB
+
 
 # Default host configuration
 #---------------------------
