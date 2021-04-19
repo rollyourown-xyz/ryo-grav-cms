@@ -61,7 +61,8 @@ project_admin_email: <EMAIL ADDRESS>
 # by the control node. Change if other projects are already deployed on the control node
 # Make sure that these settings do not overlap with any other project - e.g. if
 # other projects managed by the control node use "10.0.1"  and "10.0.2", then
-# set this to "10.0.3" and also change this value in the project inventory file
+# set this to "10.0.3" and also change the network part for [host_wireguard_ip]
+# in the project inventory file
 wireguard_address_network_part: "10.0.1"
 
 
