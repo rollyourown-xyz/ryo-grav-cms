@@ -19,6 +19,6 @@
 
 - name: Add host as LXD remote on local machine
   shell:
-    cmd: 'lxc remote add {{ host_hostname }} {{ host_wireguard_address }} --accept-certificate=true --auth-type="tls" --password="{{ lxd_core_trust_password }}" --public=false'
+    cmd: 'lxc remote add {{ host_hostname }} {{ wireguard_address_network_part }}.2 --accept-certificate=true --auth-type="tls" --password="{{ lxd_core_trust_password }}" --public=false'
   become: yes
   become_user: "{{ local_non_root_user }}"
