@@ -44,7 +44,7 @@ locals {
 
 # Computed parameters for the output image
 locals {
-  output_image_name        = "${ join("", [ local.service_name, "-", var.version ]) }"
+  output_image_name        = "${ join("-", [ "ryo-grav-cms", local.service_name, var.version ]) }"
   output_image_description = "${ join(" ", [ 
       join(":", [ local.build_image_os , local.build_image_release ]),
       "image for",
