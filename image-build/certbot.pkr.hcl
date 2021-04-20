@@ -22,8 +22,7 @@ locals {
 
 # Variables from configuration files
 locals {
-  config_path = yamldecode(file("${abspath(path.root)}/../configuration/config_path.yml"))["configuration_path"]
-  remote_lxd_host = yamldecode(file(local.config_path))["host_hostname"]
+  remote_lxd_host = yamldecode(file("${abspath(path.root)}/../configuration/configuration.yml"))["host_hostname"]
 }
 
 ## Parameters for the build process
