@@ -3,7 +3,8 @@
 [host_public_ip]
 <IP ADDRESS>
 
-# DEFAULT. Change the network part 10.0.1 if this control node already has projects deployed
+# DEFAULT. Change the network part 10.0.1 if this control node already
+# has projects deployed
 # See also configuration.yml
 [host_wireguard_ip] 
 10.0.1.2
