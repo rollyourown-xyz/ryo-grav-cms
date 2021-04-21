@@ -23,6 +23,6 @@ locals {
 #################
 
 variable "image_version" {
-  description = "Version of the images to deploy"
+  description = "Version of the images to deploy - Leave blank for 'terraform destroy'"
   type        = string
 }
