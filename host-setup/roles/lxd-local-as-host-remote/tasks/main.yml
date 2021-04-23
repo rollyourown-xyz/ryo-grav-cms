@@ -17,13 +17,6 @@
     - /var/snap/lxd/common/lxd/server.key
 
 
-- name: Run lxc list to generate client certs before adding remote
-  shell:
-    cmd: 'lxc list'
-  become: yes
-  become_user: "{{ host_non_root_user }}"
-
-
 - name: Add local machine as LXD remote on host
   shell:
     cmd: 'lxc remote add control {{ wireguard_address_network_part }}.1 --accept-certificate=true --auth-type="tls" --password="{{ lxd_core_trust_password }}" --public=false'
