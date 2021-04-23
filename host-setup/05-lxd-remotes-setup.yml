@@ -18,6 +18,7 @@
   hosts: local
   
   vars_files:
+    - "{{ playbook_dir }}/../../ryo-control-node/configuration/configuration.yml"
     - "{{ playbook_dir }}/../configuration/configuration.yml"
   
   vars:
