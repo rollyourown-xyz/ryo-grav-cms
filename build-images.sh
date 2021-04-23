@@ -24,7 +24,7 @@ errorMessage()
 
 # Default webhook and grav versions
 webhook_version=2.8.0
-grav_version=1.7.12
+grav_version=1.7.13
 
 while getopts v:w:g:h flag
 do
