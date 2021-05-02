@@ -5,7 +5,7 @@ module "deploy-webserver" {
   source = "./modules/deploy-container-dynamic-ip"
   
   lxd_remote                 = local.lxd_remote_name
-  container_image            = join("-", [ "ryo-grav-cms", "webserver", var.image_version ])
+  container_image            = join("-", [ local.project_name, "webserver", var.image_version ])
   container_name             = "webserver"
   container_profiles         = ["default"]
   container_network          = "lxd-fe"

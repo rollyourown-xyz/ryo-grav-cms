@@ -7,7 +7,7 @@ module "deploy-certbot" {
   depends_on = [ module.deploy-haproxy-dmz ]
   
   lxd_remote                 = local.lxd_remote_name
-  container_image            = join("-", [ "ryo-grav-cms", "certbot", var.image_version ])
+  container_image            = join("-", [ local.project_name, "certbot", var.image_version ])
   container_name             = "certbot"
   container_profiles         = ["default"]
   container_network          = "lxd-fe"
