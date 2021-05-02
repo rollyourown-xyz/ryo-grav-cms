@@ -9,6 +9,8 @@
 # REQUIRED Configuration
 #-----------------------
 
+project_name: ryo-grav-cms
+
 # Basic host configuration
 #-------------------------
 
@@ -86,9 +88,6 @@ lxd_storage_pool_size: 50GB
 
 # Default host configuration
 #---------------------------
-
-# Leave as default or change according to preference
-host_hostname: ryo-grav-cms
 
 # Leave as default or change according to preference
 host_new_ssh_port: 2222
