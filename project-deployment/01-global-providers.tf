@@ -8,6 +8,10 @@ terraform {
       source  = "terraform-lxd/lxd"
       version = "~> 1.5.0"
     }
+    consul = {
+      source = "hashicorp/consul"
+      version = "~> 2.12.0"
+    }
   }
 }
 
@@ -24,4 +28,10 @@ provider "lxd" {
     password = local.lxd_core_trust_password
     default  = true
   }
+}
+
+provider "consul" {
+  address    = join(".", [ local.lxd_dmz_network_part, "10" ])
+  scheme     = "http"
+  datacenter = local.project_name
 }
