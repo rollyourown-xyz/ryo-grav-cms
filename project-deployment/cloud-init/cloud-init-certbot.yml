@@ -1,6 +1,0 @@
-#cloud-config
-package_upgrade: false
-runcmd:
-  # Initialise certbot on first boot
-  - /usr/local/bin/certbot-initialise.sh
-  

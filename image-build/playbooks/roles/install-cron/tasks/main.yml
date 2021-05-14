@@ -1,6 +1,0 @@
----
-- name: Install Cron
-  apt:
-    name: cron
-    update_cache: yes
-    state: present
