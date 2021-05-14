@@ -9,7 +9,9 @@ locals {
 
 # Basic project variables
 locals {
-  project_name = yamldecode(file(local.project_configuration_path))["project_name"]
+  project_name        = yamldecode(file(local.project_configuration_path))["project_name"]
+  project_domain_name = yamldecode(file(local.project_configuration_path))["project_domain_name"]
+  project_admin_email = yamldecode(file(local.project_configuration_path))["project_admin_email"]
 }
 
 # LXD variables
