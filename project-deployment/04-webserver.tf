@@ -19,7 +19,7 @@ module "deploy-webserver" {
 
   lxd_remote                 = local.lxd_remote_name
   container_image            = join("-", [ local.project_id, "grav-webserver", var.image_version ])
-  container_name             = "grav-webserver"
+  container_name             = join("-", [ local.project_id, "grav-webserver" ])
   container_profiles         = ["default"]
   container_network          = local.project_id
   container_cloud-init       = file("cloud-init/cloud-init-grav-bootstrap.yml")
