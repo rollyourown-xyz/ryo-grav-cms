@@ -14,7 +14,8 @@ resource "consul_keys" "kv-pair" {
 
   # Domain name for the certificate is set as key, admin email as value
   key {
-    path  = join("", [ "service/certbot/", each.value["domain"] ])
-    value = each.value["admin_email"]
+    path   = join("", [ "service/certbot/", each.value["domain"] ])
+    value  = each.value["admin_email"]
+    delete = true
   }
 }
