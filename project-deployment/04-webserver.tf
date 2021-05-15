@@ -1,7 +1,7 @@
 # Deployment of Grav webserver
 ##############################
 
-# module "webserver-certificate-domains" {
+# module "grav-webserver-cert-domains" {
 #   source = "./modules/deploy-cert-domains"
 
 #   depends_on = [ module.deploy-consul ]
@@ -13,8 +13,7 @@
 # }
 
 
-## Deploy project service backends 
-module "deploy-webserver" {
+module "deploy-grav-webserver" {
   source = "./modules/deploy-container-dynamic-ip"
 
   depends_on = [ module.deploy-consul ]
@@ -32,5 +31,30 @@ module "deploy-webserver" {
 }
 
 
-## Configure HAProxy KVs for ACLs, Deny rules (?) and use-backend rules - depends on service backend deployment
+module "grav-webserver-haproxy-configuration" {
+  source = "./modules/deploy-haproxy-configuration"
 
+  depends_on = [ module.deploy-grav-webserver ]
+
+  haproxy_host_only_acls = {
+    domain      = {host = local.project_domain_name},
+    domain-deny = {host = join("", ["deny.", local.project_domain_name])}
+  }
+
+  haproxy_host_path_acls = {
+    domain-admin         = {host = local.project_domain_name,                        path = "/admin"},
+    domain-nextcloud     = {host = local.project_domain_name,                        path = "/nexctloud"}
+    domain-synapse-admin = {host = join("", ["matrix.", local.project_domain_name]), path = "/_synapse/admin"}
+  }
+
+  haproxy_acl_denys = [
+    "domain-admin",
+    "domain-deny",
+    "domain-synapse-admin"
+  ]
+
+  haproxy_acl_use-backends = {
+    domain           = {backend_service = join("-", [ local.project_id, "grav-webserver" ])},
+    domain-nextcloud = {backend_service = join("-", [ local.project_id, "grav-webserver" ])}
+  }
+}
