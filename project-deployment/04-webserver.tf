@@ -17,6 +17,8 @@
 module "deploy-webserver" {
   source = "./modules/deploy-container-dynamic-ip"
 
+  depends_on = [ module.deploy-consul ]
+  
   lxd_remote                 = local.lxd_remote_name
   container_image            = join("-", [ local.project_id, "grav-webserver", var.image_version ])
   container_name             = join("-", [ local.project_id, "grav-webserver" ])
