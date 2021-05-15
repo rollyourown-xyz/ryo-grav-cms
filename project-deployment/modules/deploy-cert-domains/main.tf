@@ -8,7 +8,7 @@ terraform {
   }
 }
 
-resource "consul_keys" "kv-pair" {
+resource "consul_keys" "cert-domain" {
 
   for_each = var.certificate_domains
 
