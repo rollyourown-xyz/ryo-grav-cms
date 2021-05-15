@@ -13,10 +13,10 @@ module "webserver-certificate-domains" {
 
   depends_on = [ module.deploy-consul ]
 
-  certificate_domains = [
-    {domain = local.project_domain_name, admin_email = local.project_admin_email},
-    {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
-  ]
+  certificate_domains = {
+    domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
+    domain_2 = {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
+  }
 }
 
 
