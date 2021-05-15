@@ -1,5 +1,5 @@
 ---
-## The generic directory /var/containers/{{ project_name }}
+## The generic directory /var/containers/{{ project_id }}
 ## for LXD container persistent storage has already been
 ## set up by generic host-setup playbooks
 ## Further project-specific container directories should be
@@ -13,7 +13,7 @@
 
 - name: Create a directory to mount in certbot containers
   file:
-    path: "/var/containers/{{ project_name }}/certbot"
+    path: "/var/containers/{{ project_id }}/certbot"
     state: directory
     mode: '0755'
 
@@ -22,7 +22,7 @@
 
 - name: Create a directory to mount in containers needing TLS certificates
   file:
-    path: "/var/containers/{{ project_name }}/tls"
+    path: "/var/containers/{{ project_id }}/tls"
     state: directory
     mode: '0755'
 
@@ -31,7 +31,7 @@
 
 - name: Create a directory to mount in HAProxy containers needing TLS certificates
   file:
-    path: "/var/containers/{{ project_name }}/tls/haproxy"
+    path: "/var/containers/{{ project_id }}/tls/haproxy"
     state: directory
     mode: '0755'
 
@@ -40,12 +40,12 @@
 
 - name: Create a directory for website content
   file:
-    path: "/var/containers/{{ project_name }}/website"
+    path: "/var/containers/{{ project_id }}/website"
     state: directory
     mode: '0755'
 
 - name: Create a directory for grav content
   file:
-    path: "/var/containers/{{ project_name }}/website/grav"
+    path: "/var/containers/{{ project_id }}/website/grav"
     state: directory
     mode: '0755'

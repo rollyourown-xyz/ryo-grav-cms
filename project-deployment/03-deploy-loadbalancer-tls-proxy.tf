@@ -8,8 +8,8 @@ module "deploy-loadbalancer-tls-proxy" {
   
   lxd_remote                 = local.lxd_remote_name
   host_external_ipv4_address = local.lxd_host_public_ipv4_address
-  container_image            = join("-", [ local.project_name, "loadbalancer-tls-proxy", var.image_version ])
-  container_name             = join("-", [ local.project_name, "loadbalancer-tls-proxy" ])
+  container_image            = join("-", [ local.project_id, "loadbalancer-tls-proxy", var.image_version ])
+  container_name             = join("-", [ local.project_id, "loadbalancer-tls-proxy" ])
   container_profiles         = ["default"]
   container_network          = "lxdbr0"
   container_ipv4_address     = join(".", [ local.lxd_br0_network_part, "11" ])
@@ -22,8 +22,8 @@ module "deploy-loadbalancer-tls-proxy" {
   ]
 
   container_mounts = [
-    {name = "certbot-data", host_path = join("", ["/var/containers/", local.project_name, "/certbot"]), mount_path = "/etc/letsencrypt", mount_readonly = false},
-    {name = "haproxy-ssl", host_path = join("", ["/var/containers/", local.project_name, "/tls/concatenated"]), mount_path = "/etc/haproxy/ssl", mount_readonly = false},
-    {name = "non-concat-certs", host_path = join("", ["/var/containers/", local.project_name, "/tls/non-concatenated"]), mount_path = "/var/certs", mount_readonly = false}
+    {name = "certbot-data", host_path = join("", ["/var/containers/", local.project_id, "/certbot"]), mount_path = "/etc/letsencrypt", mount_readonly = false},
+    {name = "haproxy-ssl", host_path = join("", ["/var/containers/", local.project_id, "/tls/concatenated"]), mount_path = "/etc/haproxy/ssl", mount_readonly = false},
+    {name = "non-concat-certs", host_path = join("", ["/var/containers/", local.project_id, "/tls/non-concatenated"]), mount_path = "/var/certs", mount_readonly = false}
   ]
 }

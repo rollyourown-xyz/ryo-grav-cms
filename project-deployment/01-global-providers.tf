@@ -33,5 +33,5 @@ provider "lxd" {
 provider "consul" {
   address    = join(".", [ local.lxd_dmz_network_part, "10" ])
   scheme     = "http"
-  datacenter = local.project_name
+  datacenter = local.project_id
 }

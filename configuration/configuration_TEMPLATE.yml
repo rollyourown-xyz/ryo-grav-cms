@@ -9,7 +9,9 @@
 # REQUIRED Configuration
 #-----------------------
 
-project_name: ryo-grav-cms
+# The project ID must be 15 characters or less and should be unique amongst
+# projects deployed on the same host
+project_id: ryo-grav-cms
 
 # Basic host configuration
 #-------------------------
