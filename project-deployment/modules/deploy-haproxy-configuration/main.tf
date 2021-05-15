@@ -12,7 +12,7 @@ resource "consul_keys" "host_only_acls" {
 
   for_each = var.haproxy_host_only_acls
 
-  # Host for the ACL is set as key, no value is set
+  # The folder for KVs is the ACL name, the host for the ACL is set as value for the key 'host'
   key {
     path   = join("", [ "service/haproxy/acl/", each.key, "/host" ])
     value  = each.value["host"]
@@ -24,17 +24,17 @@ resource "consul_keys" "host_path_acls" {
 
   for_each = var.haproxy_host_path_acls
 
-  # Host for the ACL is set as key, no value is set
+  # The folder for KVs is the ACL name, the host for the ACL is set as value for the key 'host'
   key {
-    path   = join("", [ "service/haproxy/acl/", each.key, "/", each.value["host"] ])
-    value  = ""
+    path   = join("", [ "service/haproxy/acl/", each.key, "/host" ])
+    value  = each.value["host"]
     delete = true
   }
   
-  # Path for the ACL is set as key, no value is set
+  # The folder for KVs is the ACL name, the path for the ACL is set as value for the key 'path'
   key {
-    path   = join("", [ "service/haproxy/acl/", each.key, "/", each.value["path"] ])
-    value  = ""
+    path   = join("", [ "service/haproxy/acl/", each.key, "/path" ])
+    value  = each.value["path"]
     delete = true
   }
 }
