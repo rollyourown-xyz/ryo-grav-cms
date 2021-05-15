@@ -14,7 +14,7 @@ module "deploy-loadbalancer-tls-proxy" {
   container_network          = "lxdbr0"
   container_ipv4_address     = join(".", [ local.lxd_br0_network_part, "11" ])
   
-  container_cloud-init       = file("cloud-init/cloud-init-loadbalancer-tls-proxy.yml")
+  container_cloud-init       = file("cloud-init/cloud-init-basic.yml")
   
   container_proxies = [
     {name = "proxy0", protocol = "tcp", listen = "80", connect = "80"},
