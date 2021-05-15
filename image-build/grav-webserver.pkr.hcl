@@ -23,7 +23,7 @@ variable "grav_version" {
 
 # Name for the container for which the image is to be built
 locals {
-  service_name = "webserver"
+  service_name = "grav-webserver"
 }
 
 # Variables from configuration files

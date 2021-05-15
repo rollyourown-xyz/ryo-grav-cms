@@ -26,7 +26,7 @@ errorMessage()
 # Default webhook and grav versions
 webhook_version=2.8.0
 consul_template_version=0.25.2
-grav_version=1.7.13
+grav_version=1.7.14
 
 while getopts v:w:g:h flag
 do
@@ -56,9 +56,9 @@ echo "Executing command: packer build -var \"version=$version\" -var \"webhook_v
 echo ""
 packer build -var "version=$version" -var "webhook_version=$webhook_version" -var "consul_template_version=$consul_template_version" modules/ryo-loadbalancer-tls-proxy/image-build/loadbalancer-tls-proxy.pkr.hcl
 echo ""
-echo "Building webserver image"
+echo "Building grav-webserver image"
 echo "Executing command: packer build -var \"version=$version\" -var \"grav_version=$grav_version\" webserver.pkr.hcl"
 echo ""
-packer build -var "version=$version" -var "grav_version=$grav_version" image-build/webserver.pkr.hcl
+packer build -var "version=$version" -var "grav_version=$grav_version" image-build/grav-webserver.pkr.hcl
 echo ""
 echo "Completed"
