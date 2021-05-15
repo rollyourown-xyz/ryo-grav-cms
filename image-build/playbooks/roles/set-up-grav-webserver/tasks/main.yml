@@ -33,6 +33,18 @@
     state: started
 
 
+# Copy grav-webserver consul service configuration file
+#
+- name: Copy grav-webserver consul service configuration file
+  copy:
+    mode: 0640
+    owner: consul
+    group: consul
+    dest: /etc/consul.d/grav-webserver-service.hcl
+    src: grav-webserver-service.hcl
+    force: yes
+
+
 # Copy nginx config file
 #
 - name: Copy the nginx config file
