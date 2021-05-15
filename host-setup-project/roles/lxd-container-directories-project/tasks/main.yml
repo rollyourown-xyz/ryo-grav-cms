@@ -9,33 +9,6 @@
 ## Directories for project-specific LXD container persistent storage
 ## -----------------------------------------------------------------
 
-### Certbot directory
-
-- name: Create a directory to mount in certbot containers
-  file:
-    path: "/var/containers/{{ project_id }}/certbot"
-    state: directory
-    mode: '0755'
-
-
-### TLS certificates directory
-
-- name: Create a directory to mount in containers needing TLS certificates
-  file:
-    path: "/var/containers/{{ project_id }}/tls"
-    state: directory
-    mode: '0755'
-
-
-### HAProxy directory
-
-- name: Create a directory to mount in HAProxy containers needing TLS certificates
-  file:
-    path: "/var/containers/{{ project_id }}/tls/haproxy"
-    state: directory
-    mode: '0755'
-
-
 ### Website directories
 
 - name: Create a directory for website content
