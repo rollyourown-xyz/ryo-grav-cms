@@ -1,28 +1,21 @@
 # Deployment of Grav webserver
 ##############################
 
-## Configure Key-Values in KV store for certbot to obtain certificates for project domains
+# module "webserver-certificate-domains" {
+#   source = "./modules/deploy-cert-domains"
+
+#   depends_on = [ module.deploy-consul ]
+
+#   certificate_domains = {
+#     domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
+#     domain_2 = {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
+#   }
+# }
 
 
 ##
 ## !!! TEST THIS - NOTE: ADD HAPROXY ADMIN FRONTEND TO LB-TLS-PROXY
 ##
-
-module "webserver-certificate-domains" {
-  source = "./modules/deploy-cert-domains"
-
-  depends_on = [ module.deploy-consul ]
-
-  certificate_domains = {
-    domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
-    domain_2 = {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
-  }
-}
-
-
-
-### Write module and add www.
-
 
 
 ## Deploy project service backends - !!! update image build to include consul service registration 
