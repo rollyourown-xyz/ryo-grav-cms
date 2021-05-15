@@ -31,7 +31,7 @@ provider "lxd" {
 }
 
 provider "consul" {
-  address    = join(".", [ local.lxd_br0_network_part, "10" ], "8500")
+  address    = join("", [ local.lxd_br0_network_part, ".10", ":8500" ])
   scheme     = "http"
   datacenter = local.project_id
 }
