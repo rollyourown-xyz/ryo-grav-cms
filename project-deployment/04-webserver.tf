@@ -11,6 +11,8 @@
 module "webserver-certificate-domains" {
   source = "./modules/deploy-cert-domains"
 
+  depends_on = [ module.deploy-consul ]
+
   certificate_domains = [
     {domain = local.project_domain_name, admin_email = local.project_admin_email},
     {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
