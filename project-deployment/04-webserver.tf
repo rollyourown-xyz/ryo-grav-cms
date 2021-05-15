@@ -13,11 +13,6 @@
 # }
 
 
-##
-## !!! TEST THIS - NOTE: ADD HAPROXY ADMIN FRONTEND TO LB-TLS-PROXY
-##
-
-
 ## Deploy project service backends - !!! update image build to include consul service registration 
 # module "deploy-webserver" {
 #   source = "./modules/deploy-container-dynamic-ip"
