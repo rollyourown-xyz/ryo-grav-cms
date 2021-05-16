@@ -42,24 +42,23 @@ module "deploy-grav-webserver-haproxy-backend-service" {
 }
 
 
+module "deploy-grav-webserver-haproxy-acl-configuration" {
+  source = "./modules/deploy-haproxy-configuration"
 
-# module "deploy-grav-webserver-haproxy-acl-configuration" {
-#   source = "./modules/deploy-haproxy-configuration"
+  depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 
-#   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
+  haproxy_host_only_acls = {
+    domain      = {host = local.project_domain_name},
+    domain-deny = {host = join("", ["deny.", local.project_domain_name])}
+  }
 
-#   haproxy_host_only_acls = {
-#     domain      = {host = local.project_domain_name},
-#     domain-deny = {host = join("", ["deny.", local.project_domain_name])}
-#   }
+  haproxy_host_path_acls = {
+    domain-admin         = {host = local.project_domain_name,                        path = "/admin"},
+    domain-nextcloud     = {host = local.project_domain_name,                        path = "/nexctloud"}
+    domain-synapse-admin = {host = join("", ["matrix.", local.project_domain_name]), path = "/_synapse/admin"}
+  }
 
-#   haproxy_host_path_acls = {
-#     domain-admin         = {host = local.project_domain_name,                        path = "/admin"},
-#     domain-nextcloud     = {host = local.project_domain_name,                        path = "/nexctloud"}
-#     domain-synapse-admin = {host = join("", ["matrix.", local.project_domain_name]), path = "/_synapse/admin"}
-#   }
-
-# }
+}
 
 
 # module "deploy-grav-webserver-haproxy-backend-configuration" {
