@@ -10,7 +10,7 @@ terraform {
 
 resource "consul_keys" "ssl_backend_services" {
 
-  for_each = var.ssl_backend_services
+  for_each = toset(var.ssl_backend_services)
 
   # The backend service name is the key. The value is empty.
   key {
@@ -22,7 +22,7 @@ resource "consul_keys" "ssl_backend_services" {
 
 resource "consul_keys" "non_ssl_backend_services" {
 
-  for_each = var.non_ssl_backend_services
+  for_each = toset(var.non_ssl_backend_services)
 
   # The backend service name is the key. The value is empty.
   key {
