@@ -1,16 +1,16 @@
 # Deployment of Grav webserver
 ##############################
 
-# module "grav-webserver-cert-domains" {
-#   source = "./modules/deploy-cert-domains"
+module "grav-webserver-cert-domains" {
+  source = "./modules/deploy-cert-domains"
 
-#   depends_on = [ module.deploy-consul ]
+  depends_on = [ module.deploy-consul ]
 
-#   certificate_domains = {
-#     domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
-#     domain_2 = {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
-#   }
-# }
+  certificate_domains = {
+    domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
+    domain_2 = {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
+  }
+}
 
 
 module "deploy-grav-webserver" {
@@ -26,7 +26,7 @@ module "deploy-grav-webserver" {
   container_cloud-init       = file("cloud-init/cloud-init-grav-bootstrap.yml")
   
   container_mounts = [
-    {name = "grav-user", host_path = "/var/containers/ryo-grav-cms/website/grav", mount_path = "/var/www/grav-admin/user", mount_readonly = false}
+    {name = "grav-user", host_path = join("", [ "/var/containers/", local.project_id, "/website/grav" ]), mount_path = "/var/www/grav-admin/user", mount_readonly = false}
   ]
 }
 
@@ -36,9 +36,7 @@ module "deploy-grav-webserver-haproxy-backend-service" {
 
   depends_on = [ module.deploy-consul ]
 
-  ssl_backend_services     = [ "grav-webserver" ]
-  non_ssl_backend_services = [ "grav-webserver" ]
-  
+  non_ssl_backend_services = [ join("-", [ local.project_id, "grav-webserver" ]) ]
 }
 
 
@@ -48,16 +46,9 @@ module "deploy-grav-webserver-haproxy-acl-configuration" {
   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 
   haproxy_host_only_acls = {
-    domain      = {host = local.project_domain_name},
-    domain-deny = {host = join("", ["deny.", local.project_domain_name])}
+    domain     = {host = local.project_domain_name},
+    domain-www = {host = join("", [ "www.", local.project_domain_name])}
   }
-
-  haproxy_host_path_acls = {
-    domain-admin         = {host = local.project_domain_name,                        path = "/admin"},
-    domain-nextcloud     = {host = local.project_domain_name,                        path = "/nexctloud"}
-    domain-synapse-admin = {host = join("", ["matrix.", local.project_domain_name]), path = "/_synapse/admin"}
-  }
-
 }
 
 
@@ -66,14 +57,8 @@ module "deploy-grav-webserver-haproxy-backend-configuration" {
 
   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 
-  haproxy_acl_denys = [
-    "domain-admin",
-    "domain-deny",
-    "domain-synapse-admin"
-  ]
-
   haproxy_acl_use-backends = {
-    domain           = {backend_service = join("-", [ local.project_id, "grav-webserver" ])},
-    domain-nextcloud = {backend_service = join("-", [ local.project_id, "grav-webserver" ])}
+    domain     = {backend_service = join("-", [ local.project_id, "grav-webserver" ])},
+    domain-www = {backend_service = join("-", [ local.project_id, "grav-webserver" ])}
   }
 }
