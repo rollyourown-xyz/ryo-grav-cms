@@ -61,19 +61,19 @@ module "deploy-grav-webserver-haproxy-acl-configuration" {
 }
 
 
-# module "deploy-grav-webserver-haproxy-backend-configuration" {
-#   source = "./modules/deploy-haproxy-configuration"
+module "deploy-grav-webserver-haproxy-backend-configuration" {
+  source = "./modules/deploy-haproxy-configuration"
 
-#   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
+  depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 
-#   haproxy_acl_denys = [
-#     "domain-admin",
-#     "domain-deny",
-#     "domain-synapse-admin"
-#   ]
+  haproxy_acl_denys = [
+    "domain-admin",
+    "domain-deny",
+    "domain-synapse-admin"
+  ]
 
-#   haproxy_acl_use-backends = {
-#     domain           = {backend_service = join("-", [ local.project_id, "grav-webserver" ])},
-#     domain-nextcloud = {backend_service = join("-", [ local.project_id, "grav-webserver" ])}
-#   }
-# }
+  haproxy_acl_use-backends = {
+    domain           = {backend_service = join("-", [ local.project_id, "grav-webserver" ])},
+    domain-nextcloud = {backend_service = join("-", [ local.project_id, "grav-webserver" ])}
+  }
+}
