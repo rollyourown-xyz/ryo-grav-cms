@@ -36,12 +36,12 @@
 # Copy grav-webserver consul service configuration file
 #
 - name: Copy grav-webserver consul service configuration file
-  copy:
+  template:
     mode: 0640
     owner: consul
     group: consul
     dest: /etc/consul.d/grav-webserver-service.hcl
-    src: grav-webserver-service.hcl
+    src: grav-webserver-service.hcl.j2
     force: yes
 
 

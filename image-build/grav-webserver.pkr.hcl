@@ -28,6 +28,7 @@ locals {
 
 # Variables from configuration files
 locals {
+  project_id    = yamldecode(file("${abspath(path.root)}/../../../configuration/configuration.yml"))["project_id"]
   remote_lxd_host = yamldecode(file("${abspath(path.root)}/../configuration/configuration.yml"))["project_id"]
 }
 
@@ -50,7 +51,7 @@ locals {
 
 # Computed parameters for the output image
 locals {
-  output_image_name        = "${ join("-", [ "ryo-grav-cms", local.service_name, var.version ]) }"
+  output_image_name        = "${ join("-", [ local.project_id, local.service_name, var.version ]) }"
   output_image_description = "${ join(" ", [ 
       join(":", [ local.build_image_os , local.build_image_release ]),
       "image for",
