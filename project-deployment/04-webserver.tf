@@ -1,7 +1,7 @@
 # Deployment of Grav webserver
 ##############################
 
-module "grav-webserver-cert-domains" {
+module "deploy-grav-webserver-cert-domains" {
   source = "./modules/deploy-cert-domains"
 
   depends_on = [ module.deploy-consul ]
