@@ -26,7 +26,7 @@ errorMessage()
 # Default webhook and grav versions
 webhook_version=2.8.0
 consul_template_version=0.25.2
-grav_version=1.7.14
+grav_version=1.7.15
 
 while getopts v:w:g:h flag
 do
