@@ -39,6 +39,18 @@ resource "consul_keys" "host_path_acls" {
   }
 }
 
+resource "consul_keys" "tcp_listeners" {
+
+  for_each = var.haproxy_tcp_listeners
+
+  # ACL for deny rule is set as key, no value is set
+  key {
+    path   = join("", [ "service/haproxy/tcp-listeners/", each.key ])
+    value  = each.value["backend_service"]
+    delete = true
+  }
+}
+
 resource "consul_keys" "acl_denys" {
 
   for_each = toset(var.haproxy_acl_denys)

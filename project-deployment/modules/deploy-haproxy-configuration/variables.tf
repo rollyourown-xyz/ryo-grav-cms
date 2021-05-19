@@ -17,6 +17,14 @@ variable "haproxy_host_path_acls" {
   default = {}
 }
 
+variable "haproxy_tcp_listeners" {
+  description = "Map of TCP Listeners to use in haproxy configuration."
+  type = map(object({
+    backend_service = string
+  }))
+  default = {}
+}
+
 variable "haproxy_acl_denys" {
   description = "List of ACLs to use for http-request deny in haproxy configuration."
   type = list(string)
