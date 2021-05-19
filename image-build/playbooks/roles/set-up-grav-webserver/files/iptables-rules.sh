@@ -21,6 +21,14 @@ $IPT -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
 $IPT -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 
+## Consul Client Ports
+######################
+
+# Allow Consul LAN Serf on TCP and UDP Ports 8301
+$IPT -A INPUT -p udp -m udp --dport 8301 -j ACCEPT
+$IPT -A INPUT -p tcp -m tcp --dport 8301 -j ACCEPT
+
+
 ## NGINX Ports
 ##############
 
