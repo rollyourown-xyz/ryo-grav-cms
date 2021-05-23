@@ -9,10 +9,6 @@
 # REQUIRED Configuration
 #-----------------------
 
-# The project ID must be 15 characters or less and should be unique amongst
-# projects deployed on the same host
-project_id: ryo-grav-cms
-
 # Basic host configuration
 #-------------------------
 
@@ -40,6 +36,10 @@ host_non_root_user_password: <PASSWORD>
 
 # Project configuration
 #----------------------
+
+# The project ID must be 15 characters or less and should be unique amongst
+# projects
+project_id: ryo-grav-cms
 
 # Set the domain to be used for the project. The DNS A record for the project's 
 # domain must be set to point to the public IPv4 address of your host server
