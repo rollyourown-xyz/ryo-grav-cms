@@ -4,7 +4,7 @@
 # Configuration file paths
 locals {
   project_configuration_path      = "${abspath(path.root)}/../configuration/configuration.yml"
-  lxd_core_trust_password_path    = "${abspath(path.root)}/../../ryo-control-node/configuration/lxd_core_trust_password.yml"
+  #lxd_core_trust_password_path    = "${abspath(path.root)}/../../ryo-control-node/configuration/lxd_core_trust_password.yml"
 }
 
 # Basic project variables
@@ -17,9 +17,9 @@ locals {
 # LXD variables
 locals {
   lxd_remote_name               = yamldecode(file(local.project_configuration_path))["project_id"]
-  lxd_host_private_ipv4_address = join(".", [ yamldecode(file(local.project_configuration_path))["wireguard_address_network_part"], "2" ])
+  #lxd_host_private_ipv4_address = join(".", [ yamldecode(file(local.project_configuration_path))["wireguard_address_network_part"], "2" ])
   lxd_host_public_ipv4_address  = yamldecode(file(local.project_configuration_path))["host_public_ip"]
-  lxd_core_trust_password       = yamldecode(file(local.lxd_core_trust_password_path))["lxd_core_trust_password"]
+  #lxd_core_trust_password       = yamldecode(file(local.lxd_core_trust_password_path))["lxd_core_trust_password"]
   lxd_br0_network_part          = yamldecode(file(local.project_configuration_path))["lxd_br0_network_part"]
   lxd_project_network_part      = yamldecode(file(local.project_configuration_path))["lxd_project_network_part"]
 }
