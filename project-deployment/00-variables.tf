@@ -8,7 +8,7 @@ locals {
 
 # Basic project variables
 locals {
-  project_id        = yamldecode(file(local.project_configuration_path))["project_id"]
+  project_id          = yamldecode(file(local.project_configuration_path))["project_id"]
   project_domain_name = yamldecode(file(local.project_configuration_path))["project_domain_name"]
   project_admin_email = yamldecode(file(local.project_configuration_path))["project_admin_email"]
 }

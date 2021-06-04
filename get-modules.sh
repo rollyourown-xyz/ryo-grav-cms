@@ -4,8 +4,8 @@ echo "Getting modules from repositories"
 echo ""
 
 ## Common to all projects - generic host setup repository
-echo "Executing 'git submodule add' for ryo-host-setup-generic repository"
-git submodule add https://github.com/rollyourown-xyz/ryo-host-setup-generic modules/ryo-host-setup-generic
+echo "Executing 'git submodule add' for ryo-host repository"
+git submodule add https://github.com/rollyourown-xyz/ryo-host modules/ryo-host
 
 ## Service Registry / Key-Value Store module
 echo "Executing 'git submodule add' for ryo-service-registry-kv-store repository"

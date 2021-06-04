@@ -5,7 +5,7 @@ echo ""
 
 # Generic host setup
 echo "Executing generic host setup playbooks"
-ansible-playbook -i configuration/inventory modules/ryo-host-setup-generic/host-setup/main.yml
+ansible-playbook -i configuration/inventory modules/ryo-host/host-setup/main.yml
 
 # Module-specific host setup for ryo-service-registry-kv-store
 echo "Executing module-specific host setup playbooks for ryo-service-registry-kv-store"
