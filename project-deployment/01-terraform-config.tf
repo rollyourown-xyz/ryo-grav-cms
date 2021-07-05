@@ -1,5 +1,5 @@
-# Global provider definitions for deployment
-############################################
+# The terraform lxd and consul providers are required to deploy this module
+###########################################################################
 
 terraform {
   required_version = ">= 0.14"
@@ -22,13 +22,13 @@ provider "lxd" {
   accept_remote_certificate    = false
 
   lxd_remote {
-    name     = local.lxd_remote_name
+    name     = var.host_id
     default  = true
   }
 }
 
 provider "consul" {
-  address    = join("", [ local.lxd_br0_network_part, ".10", ":8500" ])
+  address    = join("", [ local.consul_ip_address, ":8500" ])
   scheme     = "http"
-  datacenter = local.project_id
+  datacenter = var.host_id
 }
