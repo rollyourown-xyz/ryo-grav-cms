@@ -1,20 +1,65 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "Running host setup playbooks"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+helpMessage()
+{
+   echo "host-setup.sh: Use ansible to configure a remote host for project deployment"
+   echo ""
+   echo "Help: host-setup.sh"
+   echo "Usage: ./host-setup.sh -n hostname"
+   echo "Flags:"
+   echo -e "-n hostname \t\t(Mandatory) Name of the host to be configured"
+   echo -e "-h \t\t\tPrint this help message"
+   echo ""
+   exit 1
+}
+
+errorMessage()
+{
+   echo "Invalid option or mandatory input variable is missing"
+   echo "Use \"./host-setup.sh -h\" for help"
+   exit 1
+}
+
+while getopts n:h flag
+do
+    case "${flag}" in
+        n) hostname=${OPTARG};;
+        h) helpMessage ;;
+        ?) errorMessage ;;
+    esac
+done
+
+if [ -z "$hostname" ]
+then
+   errorMessage
+fi
+
+# Module-specific host setup
+echo "Running module-specific host setup playbooks"
 echo ""
 
-# Generic host setup
-echo "Executing generic host setup playbooks"
-ansible-playbook -i configuration/inventory modules/ryo-host/host-setup/main.yml
+## Module-specific host setup for ryo-service-proxy
+if [ -f ""$SCRIPT_DIR"/../ryo-service-proxy/configuration/"$hostname"_playbooks_executed" ]
+then
+   echo "Host setup for ryo-service-proxy module has already been done on "$hostname""
+   echo ""
+else
+   echo "Running module-specific host setup script for ryo-service-proxy on "$hostname""
+   echo ""
+   "$SCRIPT_DIR"/../ryo-service-proxy/host-setup.sh -n "$hostname"
+fi
 
-# Module-specific host setup for ryo-service-registry-kv-store
-echo "Executing module-specific host setup playbooks for ryo-service-registry-kv-store"
-ansible-playbook -i configuration/inventory modules/ryo-service-registry-kv-store/host-setup-module/main.yml
-
-# Module-specific host setup for ryo-loadbalancer-tls-proxy
-echo "Executing module-specific host setup playbooks for ryo-loadbalancer-tls-proxy"
-ansible-playbook -i configuration/inventory modules/ryo-loadbalancer-tls-proxy/host-setup-module/main.yml
-
-# Project-specific host setup
-echo "Executing project-specific host setup playbooks"
-ansible-playbook -i configuration/inventory host-setup-project/main.yml
+## Project-specific host setup
+if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed" ]
+then
+   echo "Host setup for ryo-grav-cms project has already been done on "$hostname""
+   echo ""
+else
+   echo "Executing project-specific host setup playbooks on "$hostname""
+   echo ""
+   echo "DEBUG: "
+   ansible-playbook -i "$SCRIPT_DIR"/../ryo-host/configuration/inventory_"$hostname" "$SCRIPT_DIR"/host-setup/main.yml --extra-vars "host_id="$hostname""
+   touch "$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed
+fi

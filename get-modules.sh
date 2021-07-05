@@ -1,16 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "Getting modules from repositories"
-echo ""
+echo "Getting project-specific modules from repositories..."
 
-## Common to all projects - generic host setup repository
-echo "Executing 'git submodule add' for ryo-host repository"
-git submodule add https://github.com/rollyourown-xyz/ryo-host modules/ryo-host
-
-## Service Registry / Key-Value Store module
-echo "Executing 'git submodule add' for ryo-service-registry-kv-store repository"
-git submodule add https://github.com/rollyourown-xyz/ryo-service-registry-kv-store modules/ryo-service-registry-kv-store
-
-## Loadbalancer / TLS Proxy module
-echo "Executing 'git submodule add' for ryo-loadbalancer-tls-proxy"
-git submodule add https://github.com/rollyourown-xyz/ryo-loadbalancer-tls-proxy modules/ryo-loadbalancer-tls-proxy
+## Service proxy, discovery and configuration module
+if [ -d "../ryo-service-proxy" ]
+then
+   echo "Module ryo-service-proxy already cloned to this control node"
+else
+   echo "Cloning ryo-service-proxy repository. Executing 'git clone' for ryo-service-proxy repository"
+   #git clone https://github.com/rollyourown-xyz/ryo-service-proxy ../ryo-service-proxy
+   git clone https://git.rollyourown.xyz/ryo-projects/ryo-service-proxy ../ryo-service-proxy
+fi

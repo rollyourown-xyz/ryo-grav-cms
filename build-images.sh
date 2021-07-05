@@ -1,16 +1,18 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 helpMessage()
 {
    echo "build-images.sh: Use packer to build images for deployment"
    echo ""
    echo "Help: build-images.sh"
-   echo "Usage: ./build-images.sh -v version -w webhook_version -g grav_version"
+   echo "Usage: ./build-images.sh -m -n hostname -g grav_version -v version"
    echo "Flags:"
+   echo -e "-m \t\t\t(Optional) Flag to also build images for modules"
+   echo -e "-n hostname \t\t(Mandatory) Name of the host for which to build images"
+   echo -e "-g grav_version \t(Optional) Override default grav version to use for the webserver image, e.g. 1.7.17 (default)"
    echo -e "-v version \t\t(Mandatory) Version stamp to apply to images, e.g. 20210101-1"
-   echo -e "-w webhook_version \t(Optional) Webhook version to use for the loadbalancer-tls-proxy image, e.g. 2.8.0 (default)"
-   echo -e "-c consul_template_version \t(Optional) consul-template version to use for the loadbalancer-tls-proxy image, e.g. 0.25.2 (default)"
-   echo -e "-g grav_version \t(Optional) Grav version to use for the webserver image, e.g. 1.7.10 (default)"
    echo -e "-h \t\t\tPrint this help message"
    echo ""
    exit 1
@@ -24,41 +26,41 @@ errorMessage()
 }
 
 # Default webhook and grav versions
-webhook_version=2.8.0
-consul_template_version=0.25.2
-grav_version=1.7.15
+grav_version='1.7.17'
 
-while getopts v:w:g:h flag
+build_modules='false'
+
+while getopts mn:v:g:h flag
 do
     case "${flag}" in
-        v) version=${OPTARG};;
-        w) webhook_version=${OPTARG};;
+        m) build_modules='true';;
+        n) hostname=${OPTARG};;
         g) grav_version=${OPTARG};;
+        v) version=${OPTARG};;
         h) helpMessage ;;
         ?) errorMessage ;;
     esac
 done
 
-if [ -z "$version" ] || [ -z "$webhook_version" ] || [ -z "$consul_template_version" ] || [ -z "$grav_version" ]
+if [ -z "$hostname" ] || [ -z "$version" ] || [ -z "$grav_version" ]
 then
    errorMessage
 fi
 
-echo "Building images with version $version, Webhook version $webhook_version, consul-template version $consul_template_version and Grav version $grav_version"
+# Build module images if -m flag is present
+if [ $build_modules == 'true' ]
+then
+   echo "Running build-images script for ryo-service-proxy module on "$hostname""
+   echo ""
+   "$SCRIPT_DIR"/../ryo-service-proxy/build-images.sh -n "$hostname" -v "$version"
+else
+   echo "Skipping image build for modules"
+   echo ""
+fi
+
+# Build project images
+echo "Building grav-webserver image on "$hostname""
+echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"grav_version=$grav_version\" -var \"version=$version\" "$SCRIPT_DIR"/image-build/grav-webserver.pkr.hcl"
 echo ""
-echo "Building Consul image"
-echo "Executing command: packer build -var \"version=$version\" modules/ryo-service-registry-kv-store/image-build/consul.pkr.hcl"
-echo ""
-packer build -var "version=$version" modules/ryo-service-registry-kv-store/image-build/consul.pkr.hcl
-echo ""
-echo "Building Loadbalancer-TLS-Proxy image"
-echo "Executing command: packer build -var \"version=$version\" -var \"webhook_version=$webhook_version\" -var \"consul_template_version=$consul_template_version\" modules/ryo-loadbalancer-tls-proxy/image-build/loadbalancer-tls-proxy.pkr.hcl"
-echo ""
-packer build -var "version=$version" -var "webhook_version=$webhook_version" -var "consul_template_version=$consul_template_version" modules/ryo-loadbalancer-tls-proxy/image-build/loadbalancer-tls-proxy.pkr.hcl
-echo ""
-echo "Building grav-webserver image"
-echo "Executing command: packer build -var \"version=$version\" -var \"grav_version=$grav_version\" webserver.pkr.hcl"
-echo ""
-packer build -var "version=$version" -var "grav_version=$grav_version" image-build/grav-webserver.pkr.hcl
-echo ""
+packer build -var "host_id="$hostname"" -var "grav_version=$grav_version" -var "version=$version" "$SCRIPT_DIR"/image-build/grav-webserver.pkr.hcl
 echo "Completed"
