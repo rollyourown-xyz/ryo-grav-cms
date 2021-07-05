@@ -1,4 +1,4 @@
-# The terraform lxd and consul providers are required to deploy this module
+# The terraform lxd and consul providers are required to deploy this project
 ###########################################################################
 
 terraform {
