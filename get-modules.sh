@@ -2,7 +2,7 @@
 
 echo "Getting project-specific modules from repositories..."
 
-## Service proxy, discovery and configuration module
+## Service proxy module
 if [ -d "../ryo-service-proxy" ]
 then
    echo "Module ryo-service-proxy already cloned to this control node"
