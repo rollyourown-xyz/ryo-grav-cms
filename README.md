@@ -1,6 +1,6 @@
 # ryo-grav-cms
 
-**NEEDS COMPLETING / TIDYING UP AFTER PROJECT WEB PAGES ARE WRITTEN**
+**NEEDS UPDATING / TIDYING UP AFTER PROJECT WEB PAGES ARE WRITTEN**
 
 Rollyourown.xyz project repository for a Grav content management system.
 
