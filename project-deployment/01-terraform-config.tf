@@ -16,7 +16,6 @@ terraform {
 }
 
 provider "lxd" {
-
   config_dir                   = "$HOME/snap/lxd/common/config"
   generate_client_certificates = false
   accept_remote_certificate    = false
