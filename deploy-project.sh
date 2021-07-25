@@ -45,7 +45,7 @@ then
    errorMessage
 fi
 
-# Deploy modules if -m flag is present
+# Deploy Service Proxy module if -m flag is present
 if [ $deploy_modules == 'true' ]
 then
    echo "Deploying ryo-service-proxy module on "$hostname" using images with version "$version""
