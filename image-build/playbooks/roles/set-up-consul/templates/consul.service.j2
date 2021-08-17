@@ -6,7 +6,7 @@ ConditionFileNotEmpty=/etc/consul.d/consul.hcl
 
 [Service]
 Type=exec
-ExecStart=/usr/bin/consul agent -config-dir=/etc/consul.d/ -retry-join={{ host_id }}-ryo-service-proxy-consul.{{ host_id }}
+ExecStart=/usr/bin/consul agent -config-dir=/etc/consul.d/ -retry-join=consul.{{ host_id }}
 ExecReload=/bin/kill --signal HUP $MAINPID
 ExecStop=/usr/bin/consul leave
 KillMode=process
