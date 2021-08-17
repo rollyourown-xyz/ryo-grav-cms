@@ -3,7 +3,7 @@
 
 resource "lxd_container" "grav-webserver" {
   remote     = var.host_id
-  name       = join("-", [ var.host_id, local.project_id, "grav-webserver" ])
+  name       = "grav-webserver"
   image      = join("-", [ local.project_id, "grav-webserver", var.image_version ])
   profiles   = ["default"]
   
