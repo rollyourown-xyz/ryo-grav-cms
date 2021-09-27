@@ -25,7 +25,7 @@ errorMessage()
    exit 1
 }
 
-# Default webhook and grav versions
+# Default grav version
 grav_version='1.7.18'
 
 build_modules='false'
