@@ -55,7 +55,7 @@ module "deploy-grav-webserver-cert-domains" {
 
 module "deploy-grav-webserver-haproxy-backend-service" {
   source = "../../ryo-service-proxy/module-deployment/modules/deploy-haproxy-backend-services"
-  non_ssl_backend_services = [ join("-", [ var.host_id, local.project_id, "grav-webserver" ]) ]
+  non_ssl_backend_services = [ "grav-webserver" ]
 }
 
 module "deploy-grav-webserver-haproxy-acl-configuration" {
@@ -75,7 +75,7 @@ module "deploy-grav-webserver-haproxy-backend-configuration" {
   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 
   haproxy_acl_use-backends = {
-    domain     = {backend_service = join("-", [ var.host_id, local.project_id, "grav-webserver" ])},
-    domain-www = {backend_service = join("-", [ var.host_id, local.project_id, "grav-webserver" ])}
+    domain     = {backend_service = "grav-webserver"},
+    domain-www = {backend_service = "grav-webserver"}
   }
 }
