@@ -26,7 +26,7 @@ errorMessage()
 }
 
 # Default grav version
-grav_version='1.7.18'
+grav_version='1.7.23'
 
 build_modules='false'
 
