@@ -195,3 +195,18 @@
     group: www-data
     path: /var/www/grav-admin/user
     state: directory
+
+
+# Set up grav scheduler cron job
+
+- name: Set up grav scheduler cron job
+  cron:
+    name: "grav_scheduler_cron"
+    user: www-data
+    month: "*"
+    day: "*"
+    weekday: "*"
+    hour: "*"
+    minute: "*"
+    job: "cd /var/www/grav-admin;/usr/bin/php bin/grav scheduler 1>> /dev/null 2>&1"
+    state: present
