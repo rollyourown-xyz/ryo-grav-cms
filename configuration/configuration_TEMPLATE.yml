@@ -17,9 +17,15 @@ project_id: ryo-grav-cms
 # domain must be set to point to the public IPv4 address of your host server
 project_domain_name: <DOMAIN>
 
-# Set a strong password for the grav_admin user - minimum 8 chars, at least 
+# Enter a username for the administrator of this project, 
+# This will be the username of the grav administrator account
+project_admin_username: <USERNAME>
+
+# Enter a password for the administrator of this project.
+# The password should have a minimum 8 chars, at least 
 # one number, one uppercase and one lowercase letter
-grav_admin_password: <PASSWORD>
+# This password will be the password for the nextcloud administrator account
+project_admin_password: <PASSWORD>
 
 # Enter an email address for the administrator of this project, 
 # this will be used for letsencrypt certificates and for the grav_admin user

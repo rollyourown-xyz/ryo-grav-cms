@@ -154,14 +154,14 @@
     force: yes
 
 
-# Copy the grav_admin account file
+# Copy the admin user account file
 #
-- name: Copy the grav_admin account file
+- name: Copy the admin user account file
   template:
     mode: 0644
     owner: www-data
     group: www-data
-    dest: /var/www/grav-admin/user/accounts/grav_admin.yaml
+    dest: "/var/www/grav-admin/user/accounts/{{ project_admin_username }}.yaml"
     src: grav_admin.yaml.j2
     force: yes
 
