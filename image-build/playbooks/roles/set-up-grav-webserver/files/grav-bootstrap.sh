@@ -16,7 +16,7 @@ fi
 rm -R /usr/local/bootstrap/user
 
 # Copy cronjob file from update directory to /etc/cron.d/
-cp -p /usr/local/bootstrap/grav_scheduler_cronjob /etc/cron.d/grav_scheduler_cronjob
+#cp -p /usr/local/bootstrap/grav_scheduler_cronjob /etc/cron.d/grav_scheduler_cronjob
   
 # Restart cron service
-/etc/init.d/cron restart
+#/etc/init.d/cron restart

@@ -10,9 +10,11 @@
   
   roles:
     - role: upgrade-container
+    - role: install-cron
     - role: install-iptables
     - role: install-nginx
     - role: install-grav-and-dependencies
     - role: install-consul
     - role: set-up-consul
     - role: set-up-grav-webserver
+    - role: set-up-cron
