@@ -130,6 +130,18 @@
     force: yes
 
 
+# # Copy cronjob file to bootstrap directory
+# #
+# - name: Copy cronjob file to bootstrap directory
+#   copy:
+#     mode: 0640
+#     owner: root
+#     group: root
+#     dest: /usr/local/bootstrap/grav_scheduler_cronjob
+#     src: grav_scheduler_cronjob
+#     force: yes
+
+
 # Copy the site.yaml file
 #
 - name: Copy the site.yaml file
@@ -195,18 +207,3 @@
     group: www-data
     path: /var/www/grav-admin/user
     state: directory
-
-
-# Set up grav scheduler cron job
-
-- name: Set up grav scheduler cron job
-  cron:
-    name: "grav_scheduler_cron"
-    user: www-data
-    month: "*"
-    day: "*"
-    weekday: "*"
-    hour: "*"
-    minute: "*"
-    job: "cd /var/www/grav-admin;/usr/bin/php bin/grav scheduler 1>> /dev/null 2>&1"
-    state: present
