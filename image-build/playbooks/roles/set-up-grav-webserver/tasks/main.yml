@@ -130,16 +130,16 @@
     force: yes
 
 
-# # Copy cronjob file to bootstrap directory
-# #
-# - name: Copy cronjob file to bootstrap directory
-#   copy:
-#     mode: 0640
-#     owner: root
-#     group: root
-#     dest: /usr/local/bootstrap/grav_scheduler_cronjob
-#     src: grav_scheduler_cronjob
-#     force: yes
+# Copy cronjob file to bootstrap directory
+#
+- name: Copy cronjob file to bootstrap directory
+  copy:
+    mode: 0640
+    owner: root
+    group: root
+    dest: /usr/local/bootstrap/grav_scheduler_cronjob
+    src: grav_scheduler_cronjob
+    force: yes
 
 
 # Copy the site.yaml file
