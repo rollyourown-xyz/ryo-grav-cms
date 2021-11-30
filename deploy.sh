@@ -81,7 +81,6 @@ if [ "$INCLUDE_MODULES" == "y" ]; then
 
   # Run host setup playbooks for modules
   echo ""
-  echo "Running module-specific host setup for "$PROJECT_ID" on "$hostname""
   for module in $MODULES
   do
     /bin/bash "$SCRIPT_DIR"/scripts/host-setup-module.sh -n "$hostname" -m "$module"
@@ -89,7 +88,6 @@ if [ "$INCLUDE_MODULES" == "y" ]; then
 
   # Run packer image build for modules
   echo ""
-  echo "Running image build for modules for "$PROJECT_ID" on "$hostname""
   for module in $MODULES
   do
     /bin/bash "$SCRIPT_DIR"/scripts/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
@@ -97,7 +95,6 @@ if [ "$INCLUDE_MODULES" == "y" ]; then
 
   # Deploy modules
   echo ""
-  echo "Running module deployment for "$PROJECT_ID" on "$hostname""
   for module in $MODULES
   do
     /bin/bash "$SCRIPT_DIR"/scripts/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
