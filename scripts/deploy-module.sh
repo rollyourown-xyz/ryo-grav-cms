@@ -43,4 +43,4 @@ fi
 
 # Deploy module
 echo "Deploying "$module" module on "$hostname" using images with version "$version""
-"$SCRIPT_DIR"/../../"$module"/deploy-module.sh -n "$hostname" -v "$version""
+"$SCRIPT_DIR"/../../"$module"/deploy-module.sh -n "$hostname" -v "$version"
