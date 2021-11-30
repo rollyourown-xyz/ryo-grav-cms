@@ -47,6 +47,10 @@ fi
 
 echo "rollyourown.xyz deployment script for "$PROJECT_ID""
 
+# Update project repository
+echo "Refreshing project repository with git pull"
+git pull
+
 # Get user input for whether to do module host set up, module image build and module deployment
 echo ""
 echo -n "Include modules? "
