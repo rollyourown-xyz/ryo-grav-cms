@@ -1,13 +1,10 @@
 #!/bin/bash
 
 # Project ID
-PROJECT_ID=ryo-grav-cms
+PROJECT_ID="ryo-grav-cms"
 
 # Required modules (space-separated list in the form "module_1 module_2 module_3")
 MODULES="ryo-service-proxy"
-
-# Default project software versions
-grav_version="1.7.25"
 
 # Script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
@@ -80,28 +77,28 @@ if [ "$INCLUDE_MODULES" == "y" ]; then
   echo "Cloning/updating modules for "$PROJECT_ID""
   for module in $MODULES
   do
-    /bin/bash "$SCRIPT_DIR"/scripts/get-module.sh -m "$module"
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
   done
 
   # Run host setup playbooks for modules
   echo ""
   for module in $MODULES
   do
-    /bin/bash "$SCRIPT_DIR"/scripts/host-setup-module.sh -n "$hostname" -m "$module"
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
   done
 
   # Run packer image build for modules
   echo ""
   for module in $MODULES
   do
-    /bin/bash "$SCRIPT_DIR"/scripts/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
   done
 
   # Deploy modules
   echo ""
   for module in $MODULES
   do
-    /bin/bash "$SCRIPT_DIR"/scripts/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
   done
 
 else
@@ -117,51 +114,14 @@ fi
 echo ""
 echo ""
 echo "Running project-specific host setup for "$PROJECT_ID" on "$hostname""
-
-if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed" ]; then
-  echo ""
-  echo "Host setup for "$PROJECT_ID" project has already been done on "$hostname""
-else
-  echo ""
-  echo "Executing project-specific host setup for "$PROJECT_ID" on "$hostname""
-  ansible-playbook -i "$SCRIPT_DIR"/../ryo-host/configuration/inventory_"$hostname" "$SCRIPT_DIR"/host-setup/main.yml --extra-vars "host_id="$hostname""
-  touch "$SCRIPT_DIR"/configuration/"$hostname"_playbooks_executed
-  echo "Completed"
-fi
+/bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname"
 
 # Build project images
 echo ""
 echo "Running image build for "$PROJECT_ID" on "$hostname""
-# Grav webserver
-echo ""
-echo "Building grav-webserver image on "$hostname""
-echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"grav_version=$grav_version\" -var \"version=$version\" "$SCRIPT_DIR"/image-build/grav-webserver.pkr.hcl"
-packer build -var "host_id="$hostname"" -var "grav_version="$grav_version"" -var "version="$version"" "$SCRIPT_DIR"/image-build/grav-webserver.pkr.hcl
-echo "Completed"
+/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
 
 # Deploy project containers
 echo ""
 echo "Deploying "$PROJECT_ID" on "$hostname""
-# Set up / switch to project workspace for host
-if [ -f ""$SCRIPT_DIR"/configuration/"$hostname"_workspace_created" ]; then
-   echo ""
-   echo "Workspace for host "$hostname" already created, switching to workspace"
-   echo ""
-   echo "Executing command terraform -chdir="$SCRIPT_DIR"/project-deployment workspace select "$hostname""
-   terraform -chdir="$SCRIPT_DIR"/project-deployment workspace select "$hostname"
-else
-   echo ""
-   echo "Creating workpsace for host "$hostname" and switching to it"
-   echo ""
-   echo "Executing command: terraform -chdir="$SCRIPT_DIR"/project-deployment workspace new "$hostname""
-   terraform -chdir="$SCRIPT_DIR"/project-deployment workspace new "$hostname"
-   touch "$SCRIPT_DIR"/configuration/"$hostname"_workspace_created
-fi
-# Deploy
-echo ""
-echo "Executing command: terraform -chdir="$SCRIPT_DIR"/project-deployment init"
-terraform -chdir="$SCRIPT_DIR"/project-deployment init
-echo ""
-echo "Executing command: terraform -chdir="$SCRIPT_DIR"/project-deployment apply -input=false -auto-approve -var \"host_id="$hostname"\" -var \"image_version="$version"\""
-terraform -chdir="$SCRIPT_DIR"/project-deployment apply -input=false -auto-approve -var "host_id="$hostname"" -var "image_version="$version""
-echo "Completed"
+/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"
