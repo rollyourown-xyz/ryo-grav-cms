@@ -8,7 +8,7 @@ helpMessage()
   echo "deploy-module.sh: Use terraform to deploy project"
   echo ""
   echo "Help: deploy-module.sh"
-  echo "Usage: ./deploy-module.sh -v version"
+  echo "Usage: ./deploy-module.sh -n hostname -v version -m module"
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host on which to deploy the project"
   echo -e "-v version \t\t(Mandatory) Version stamp for images to deploy, e.g. 20210101-1"

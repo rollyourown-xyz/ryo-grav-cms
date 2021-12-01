@@ -8,7 +8,7 @@ helpMessage()
   echo "build-image-module.sh: Use packer to build images for deployment"
   echo ""
   echo "Help: build-image-module.sh"
-  echo "Usage: ./build-image-module.sh -m -n hostname -g grav_version -v version"
+  echo "Usage: ./build-image-module.sh -m -n hostname -v version -m module"
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host for which to build images"
   echo -e "-v version \t\t(Mandatory) Version stamp to apply to images, e.g. 20210101-1"

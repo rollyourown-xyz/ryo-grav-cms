@@ -8,7 +8,7 @@ helpMessage()
   echo "host-setup-module.sh: Use ansible to configure a remote host for module deployment"
   echo ""
   echo "Help: host-setup-module.sh"
-  echo "Usage: ./host-setup-module.sh -n hostname - module"
+  echo "Usage: ./host-setup-module.sh -n hostname -m module"
   echo "Flags:"
   echo -e "-n hostname \t\t(Mandatory) Name of the host to be configured"
   echo -e "-m module \t\t(Mandatory) The module for which to set up the remote host"
