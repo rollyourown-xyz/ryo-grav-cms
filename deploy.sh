@@ -112,7 +112,6 @@ fi
 
 # Run host setup playbooks for project
 echo ""
-echo ""
 echo "Running project-specific host setup for "$PROJECT_ID" on "$hostname""
 /bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname"
 
