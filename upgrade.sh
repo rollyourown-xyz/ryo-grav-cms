@@ -61,8 +61,7 @@ fi
 ###########################
 
 echo "Refreshing project repository with git pull to get the current version"
-#git pull
-echo "DEBUG: git pull"
+git pull
 
 
 # Upgrade Modules
