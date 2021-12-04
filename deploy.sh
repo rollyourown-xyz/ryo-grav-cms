@@ -87,29 +87,25 @@ elif [ "$DEPLOY_MODULES" == "y" ]; then
     # Clone module repository
     echo ""
     echo "Cloning "$module" repository..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
     echo ""
     echo ""$module" module repository cloned."
     # Run host setup playbooks for module
     echo ""
     echo "Setting up host "$hostname" for "$module" module..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
     echo ""
     echo "Host setup for "$module" module on "$hostname" completed."
     # Run packer image build for module
     echo ""
     echo "Building image(s) for "$module" module on "$hostname"..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
     echo ""
     echo ""$module" module image build(s) completed on "$hostname"."
     # Deploy module
     echo ""
     echo "Deploying image(s) for "$module" module on "$hostname"..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
     echo ""
     echo ""$module" module deployment completed."
   done
@@ -143,29 +139,25 @@ else
       # Clone module repository
       echo ""
       echo "Cloning "$module" repository..."
-      #/bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
-      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module""
+      /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
       echo ""
       echo ""$module" module repository cloned."
       # Run host setup playbooks for module
       echo ""
       echo "Setting up host "$hostname" for "$module" module..."
-      #/bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
-      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module""
+      /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
       echo ""
       echo "Host setup for "$module" module on "$hostname" completed."
       # Run packer image build for module
       echo ""
       echo "Building image(s) for "$module" module on "$hostname"..."
-      #/bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
-      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module""
+      /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
       echo ""
       echo ""$module" module image build(s) completed on "$hostname"."
       # Deploy module
       echo ""
       echo "Deploying image(s) for "$module" module on "$hostname"..."
-      #/bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
-      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module""
+      /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
       echo ""
       echo ""$module" module deployment completed."
     else
@@ -182,17 +174,14 @@ fi
 # Run host setup playbooks for project
 echo ""
 echo "Running project-specific host setup for "$PROJECT_ID" on "$hostname""
-#/bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname"
-echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname""
+/bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname"
 
 # Build project images
 echo ""
 echo "Running image build for "$PROJECT_ID" on "$hostname""
-#/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
-echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version""
+/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
 
 # Deploy project containers
 echo ""
 echo "Deploying "$PROJECT_ID" on "$hostname""
-#/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"
-echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version""
+/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"

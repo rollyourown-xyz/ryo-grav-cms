@@ -95,22 +95,19 @@ do
     # git pull module repository
     echo ""
     echo "Updating "$module" repository..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
     echo ""
     echo ""$module" module repository updated."
     # Run packer image build for modules
     echo ""
     echo "Building new image(s) for "$module" module on "$hostname"..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
     echo ""
     echo ""$module" module image build(s) completed on "$hostname"."
     # Deploy module
     echo ""
     echo "Deploying new image(s) for "$module" module on "$hostname"..."
-    #/bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
-    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module""
+    /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
     echo ""
     echo ""$module" module deployment completed."
   else
@@ -125,11 +122,9 @@ done
 # Build new project images
 echo ""
 echo "Building new image(s) for "$PROJECT_ID" on "$hostname""
-#/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
-echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version""
+/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
 
 # Deploy project containers
 echo ""
 echo "Deploying new image(s) for "$PROJECT_ID" on "$hostname""
-#/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"
-echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version""
+/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"
