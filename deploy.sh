@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# deploy.sh
+# This script deploys the modules required for the project and the project components 
+
 # Project ID
 PROJECT_ID="ryo-grav-cms"
 
@@ -8,6 +11,13 @@ MODULES="ryo-service-proxy"
 
 # Script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# Info
+echo "rollyourown.xyz deployment script for "$PROJECT_ID""
+
+
+# Help and error messages
+#########################
 
 helpMessage()
 {
@@ -28,6 +38,10 @@ errorMessage()
   exit 1
 }
 
+
+# Command-line input handling
+#############################
+
 while getopts n:v:h flag
 do
   case "${flag}" in
@@ -42,85 +56,143 @@ if [ -z "$hostname" ] || [ -z "$version" ]; then
   errorMessage
 fi
 
-echo "rollyourown.xyz deployment script for "$PROJECT_ID""
 
 # Update project repository
-echo "Refreshing project repository with git pull"
-git pull
+###########################
 
-# Get user input for whether to do module host set up, module image build and module deployment
+echo "Refreshing project repository with git pull to ensure the current version"
+#git pull
+echo "DEBUG: git pull"
+
+
+# Deploy Modules
+################
+
+# Get user input for whether to deploy all modules (default yes)
 echo ""
-echo -n "Include modules? "
-read -e -p "[y/n/Q]:" INCLUDE_MODULES
-INCLUDE_MODULES="${INCLUDE_MODULES:-"q"}"
-INCLUDE_MODULES="${INCLUDE_MODULES,,}"
-if [ "$INCLUDE_MODULES" == "q" ]; then
-  echo "Quitting"
+echo "Deploy all modules?"
+echo -n "If this is the first project to be deployed on the host "$hostname", then answer 'y' (the default) "
+read -e -p "[y/n]:" DEPLOY_MODULES
+DEPLOY_MODULES="${DEPLOY_MODULES:-"y"}"
+DEPLOY_MODULES="${DEPLOY_MODULES,,}"
+
+if [ ! "$DEPLOY_MODULES" == "y" ] && [ ! "$DEPLOY_MODULES" == "n" ]; then
+  echo "Invalid option "${DEPLOY_MODULES}". Quitting"
   exit 1
-elif [ ! "$INCLUDE_MODULES" == "y" ] && [ ! "$INCLUDE_MODULES" == "n" ]; then
-  echo "Invalid option "${INCLUDE_MODULES}". Quitting"
-  exit 1
-elif [ "$INCLUDE_MODULES" == "y" ]; then
-  echo "Module host setup, image build and deployment will be done."
-else
-  echo "Module host setup, image build and deployment will be skipped."
-fi
 
-
-# Modules
-#########
-
-if [ "$INCLUDE_MODULES" == "y" ]; then
-
-  # Clone modules or git pull if already cloned
-  echo ""
-  echo "Cloning/updating modules for "$PROJECT_ID""
+elif [ "$DEPLOY_MODULES" == "y" ]; then
+  echo "Deploying all modules."
   for module in $MODULES
   do
-    /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
-  done
-
-  # Run host setup playbooks for modules
-  echo ""
-  for module in $MODULES
-  do
-    /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
-  done
-
-  # Run packer image build for modules
-  echo ""
-  for module in $MODULES
-  do
-    /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
-  done
-
-  # Deploy modules
-  echo ""
-  for module in $MODULES
-  do
-    /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
+    # Clone module repository
+    echo ""
+    echo "Cloning "$module" repository..."
+    #/bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
+    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module""
+    echo ""
+    echo ""$module" module repository cloned."
+    # Run host setup playbooks for module
+    echo ""
+    echo "Setting up host "$hostname" for "$module" module..."
+    #/bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
+    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module""
+    echo ""
+    echo "Host setup for "$module" module on "$hostname" completed."
+    # Run packer image build for module
+    echo ""
+    echo "Building image(s) for "$module" module on "$hostname"..."
+    #/bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
+    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module""
+    echo ""
+    echo ""$module" module image build(s) completed on "$hostname"."
+    # Deploy module
+    echo ""
+    echo "Deploying image(s) for "$module" module on "$hostname"..."
+    #/bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
+    echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module""
+    echo ""
+    echo ""$module" module deployment completed."
   done
 
 else
-  echo ""
-  echo "Skipping modules"
+  echo "Checking for each module."
+  for module in $MODULES
+  do
+    # Get user input for whether to do module deployment (default yes)
+    echo ""
+    echo "Checking whether to deploy "$module" module."
+    echo "Check the documentation for already-deployed projects at https://rollyourown.xyz/rollyourown/projects/"
+    echo "If this module has already been deployed for another project on the host "$hostname", then answer 'n'."
+    echo "Default is 'y'."
+    echo -n "Deploy "$module" module? "
+    read -e -p "[y/n]:" DEPLOY_MODULE
+    DEPLOY_MODULE="${DEPLOY_MODULE:-"y"}"
+    DEPLOY_MODULE="${DEPLOY_MODULE,,}"
+    
+    # Check input
+    while [ ! "$DEPLOY_MODULE" == "y" ] && [ ! "$DEPLOY_MODULE" == "n" ]
+    do
+      echo "Invalid option "${DEPLOY_MODULE}". Please try again."
+      echo -n "Deploy "$module" module (default is 'y')? "
+      read -e -p "[y/n]:" DEPLOY_MODULE
+      DEPLOY_MODULE="${DEPLOY_MODULE:-"y"}"
+      DEPLOY_MODULE="${DEPLOY_MODULE,,}"
+    done
+
+    if [ "$DEPLOY_MODULE" == "y" ]; then
+      # Clone module repository
+      echo ""
+      echo "Cloning "$module" repository..."
+      #/bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module"
+      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/get-module.sh -m "$module""
+      echo ""
+      echo ""$module" module repository cloned."
+      # Run host setup playbooks for module
+      echo ""
+      echo "Setting up host "$hostname" for "$module" module..."
+      #/bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module"
+      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/host-setup-module.sh -n "$hostname" -m "$module""
+      echo ""
+      echo "Host setup for "$module" module on "$hostname" completed."
+      # Run packer image build for module
+      echo ""
+      echo "Building image(s) for "$module" module on "$hostname"..."
+      #/bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module"
+      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/build-image-module.sh -n "$hostname" -v "$version" -m "$module""
+      echo ""
+      echo ""$module" module image build(s) completed on "$hostname"."
+      # Deploy module
+      echo ""
+      echo "Deploying image(s) for "$module" module on "$hostname"..."
+      #/bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module"
+      echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-modules/deploy-module.sh -n "$hostname" -v "$version" -m "$module""
+      echo ""
+      echo ""$module" module deployment completed."
+    else
+      echo ""
+      echo "Skipping "$module" module deployment."
+    fi
+  done
 fi
 
 
-# Project components
-####################
+# Deploy project components
+###########################
 
 # Run host setup playbooks for project
 echo ""
 echo "Running project-specific host setup for "$PROJECT_ID" on "$hostname""
-/bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname"
+#/bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname"
+echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/host-setup-project.sh -n "$hostname""
 
 # Build project images
 echo ""
 echo "Running image build for "$PROJECT_ID" on "$hostname""
-/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
+#/bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version"
+echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/build-image-project.sh -n "$hostname" -v "$version""
 
 # Deploy project containers
 echo ""
 echo "Deploying "$PROJECT_ID" on "$hostname""
-/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"
+#/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version"
+echo "DEBUG: /bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$version""
