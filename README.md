@@ -1,4 +1,4 @@
-# ryo-grav-cms
+# ryo-grav-cms-standalone
 
 **NEEDS UPDATING / TIDYING UP AFTER PROJECT WEB PAGES ARE WRITTEN**
 
