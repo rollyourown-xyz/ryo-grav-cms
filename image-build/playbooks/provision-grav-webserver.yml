@@ -13,6 +13,7 @@
     - role: install-cron
     - role: install-iptables
     - role: install-nginx
+    - role: install-git
     - role: install-grav-and-dependencies
     - role: install-consul
     - role: set-up-consul
