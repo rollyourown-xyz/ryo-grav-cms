@@ -41,7 +41,7 @@ resource "lxd_container" "grav-webserver" {
 #################################################
 
 module "deploy-grav-webserver-cert-domains" {
-  source = "../../ryo-service-proxy/module-deployment/modules/deploy-cert-domains"
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-cert-domains"
 
   certificate_domains = {
     domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
@@ -54,12 +54,12 @@ module "deploy-grav-webserver-cert-domains" {
 ##############################
 
 module "deploy-grav-webserver-haproxy-backend-service" {
-  source = "../../ryo-service-proxy/module-deployment/modules/deploy-haproxy-backend-services"
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-haproxy-backend-services"
   non_ssl_backend_services = [ "grav-webserver" ]
 }
 
 module "deploy-grav-webserver-haproxy-acl-configuration" {
-  source = "../../ryo-service-proxy/module-deployment/modules/deploy-haproxy-configuration"
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-haproxy-configuration"
 
   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 
@@ -70,7 +70,7 @@ module "deploy-grav-webserver-haproxy-acl-configuration" {
 }
 
 module "deploy-grav-webserver-haproxy-backend-configuration" {
-  source = "../../ryo-service-proxy/module-deployment/modules/deploy-haproxy-configuration"
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-haproxy-configuration"
 
   depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
 

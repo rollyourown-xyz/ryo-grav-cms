@@ -7,7 +7,7 @@
 PROJECT_ID="ryo-grav-cms"
 
 # Required modules (space-separated list in the form "module_1 module_2 module_3")
-MODULES="ryo-service-proxy"
+MODULES="ryo-ingress-proxy"
 
 # Script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
