@@ -16,14 +16,14 @@
 
 ### Website directories
 
-- name: Create a directory for website content
+- name: Create a directory for grav content
   file:
-    path: "/var/containers/{{ project_id }}/website"
+    path: "/var/containers/{{ project_id }}/grav"
     state: directory
     mode: '0755'
 
-- name: Create a directory for grav content
+- name: Create a directory for grav user content
   file:
-    path: "/var/containers/{{ project_id }}/website/grav"
+    path: "/var/containers/{{ project_id }}/grav/user"
     state: directory
     mode: '0755'

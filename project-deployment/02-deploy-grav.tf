@@ -29,7 +29,7 @@ resource "lxd_container" "grav-webserver" {
     type = "disk"
     
     properties = {
-      source   = join("", [ "/var/containers/", local.project_id, "/website/grav" ])
+      source   = join("", [ "/var/containers/", local.project_id, "/grav/user/" ])
       path     = "/var/www/grav-admin/user"
       readonly = "false"
       shift    = "true"
@@ -50,31 +50,31 @@ module "deploy-grav-webserver-cert-domains" {
 }
 
 
-# Deploy HAProxy configuration
-##############################
+# Deploy Ingress Proxy configuration
+####################################
 
-module "deploy-grav-webserver-haproxy-backend-service" {
-  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-haproxy-backend-services"
+module "deploy-grav-webserver-ingress-proxy-backend-service" {
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-backend-services"
   non_ssl_backend_services = [ "grav-webserver" ]
 }
 
-module "deploy-grav-webserver-haproxy-acl-configuration" {
-  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-haproxy-configuration"
+module "deploy-grav-webserver-ingress-proxy-acl-configuration" {
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-configuration"
 
-  depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
+  depends_on = [ module.deploy-grav-webserver-ingress-proxy-backend-service ]
 
-  haproxy_host_only_acls = {
+  ingress-proxy_host_only_acls = {
     domain     = {host = local.project_domain_name},
     domain-www = {host = join("", [ "www.", local.project_domain_name])}
   }
 }
 
-module "deploy-grav-webserver-haproxy-backend-configuration" {
-  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-haproxy-configuration"
+module "deploy-grav-webserver-ingress-proxy-backend-configuration" {
+  source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-ingress-proxy-configuration"
 
-  depends_on = [ module.deploy-grav-webserver-haproxy-backend-service ]
+  depends_on = [ module.deploy-grav-webserver-ingress-proxy-backend-service ]
 
-  haproxy_acl_use-backends = {
+  ingress-proxy_acl_use-backends = {
     domain     = {backend_service = "grav-webserver"},
     domain-www = {backend_service = "grav-webserver"}
   }
