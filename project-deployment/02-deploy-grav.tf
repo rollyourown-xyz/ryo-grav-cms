@@ -6,8 +6,7 @@ module "deploy-grav-webserver-cert-domains" {
   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-cert-domains"
 
   certificate_domains = {
-    domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email},
-    domain_2 = {domain = join("", [ "www.", local.project_domain_name]), admin_email = local.project_admin_email}
+    domain_1 = {domain = local.project_domain_name, admin_email = local.project_admin_email}
   }
 }
 
@@ -69,8 +68,7 @@ module "deploy-grav-webserver-ingress-proxy-acl-configuration" {
   depends_on = [ module.deploy-grav-webserver-ingress-proxy-backend-service ]
 
   ingress-proxy_host_only_acls = {
-    domain     = {host = local.project_domain_name},
-    domain-www = {host = join("", [ "www.", local.project_domain_name])}
+    domain     = {host = local.project_domain_name}
   }
 }
 
@@ -80,7 +78,6 @@ module "deploy-grav-webserver-ingress-proxy-backend-configuration" {
   depends_on = [ module.deploy-grav-webserver-ingress-proxy-backend-service ]
 
   ingress-proxy_acl_use-backends = {
-    domain     = {backend_service = "grav-webserver"},
-    domain-www = {backend_service = "grav-webserver"}
+    domain     = {backend_service = "grav-webserver"}
   }
 }
