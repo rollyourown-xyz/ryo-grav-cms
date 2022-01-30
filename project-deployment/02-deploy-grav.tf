@@ -2,7 +2,6 @@
 #################################################
 
 module "deploy-grav-webserver-cert-domains" {
-  
   source = "../../ryo-ingress-proxy/module-deployment/modules/deploy-cert-domains"
 
   certificate_domains = {
@@ -16,7 +15,8 @@ module "deploy-grav-webserver-cert-domains" {
 
 resource "lxd_container" "grav-webserver" {
   remote     = var.host_id
-  name       = "grav-webserver"
+
+  name       = join("-", [ local.project_id, "grav-webserver" ])
   image      = join("-", [ local.project_id, "grav-webserver", var.image_version ])
   profiles   = ["default"]
   
@@ -59,7 +59,7 @@ module "deploy-grav-webserver-ingress-proxy-backend-service" {
 
   depends_on = [ lxd_container.grav-webserver ]
 
-  non_ssl_backend_services = [ "grav-webserver" ]
+  non_ssl_backend_services = [ join("-", [ local.project_id, "grav-webserver" ]) ]
 }
 
 module "deploy-grav-webserver-ingress-proxy-acl-configuration" {
@@ -68,7 +68,7 @@ module "deploy-grav-webserver-ingress-proxy-acl-configuration" {
   depends_on = [ module.deploy-grav-webserver-ingress-proxy-backend-service ]
 
   ingress-proxy_host_only_acls = {
-    domain     = {host = local.project_domain_name}
+    join("-", [ local.project_id, "domain" ]) = {host = local.project_domain_name}
   }
 }
 
@@ -78,6 +78,6 @@ module "deploy-grav-webserver-ingress-proxy-backend-configuration" {
   depends_on = [ module.deploy-grav-webserver-ingress-proxy-backend-service ]
 
   ingress-proxy_acl_use-backends = {
-    domain     = {backend_service = "grav-webserver"}
+    join("-", [ local.project_id, "domain" ]) = {backend_service = join("-", [ local.project_id, "grav-webserver" ])}
   }
 }
