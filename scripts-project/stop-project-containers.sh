@@ -37,13 +37,18 @@ then
   errorMessage
 fi
 
+# Get Project ID from configuration file
+PROJECT_ID="$(yq eval '.project_id' "$SCRIPT_DIR"/../configuration/configuration_"$hostname".yml)"
+
+
 # Stop project containers
+#########################
 
 echo ""
 echo "Stopping project container..."
 
-echo "...stopping grav-webserver container"
-lxc stop "$hostname":grav-webserver
+echo "...stopping "$PROJECT_ID"-grav-webserver container"
+lxc stop "$hostname":"$PROJECT_ID"-grav-webserver
 echo ""
 
 echo "Project container stopped"

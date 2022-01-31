@@ -37,13 +37,18 @@ then
   errorMessage
 fi
 
+# Get Project ID from configuration file
+PROJECT_ID="$(yq eval '.project_id' "$SCRIPT_DIR"/../configuration/configuration_"$hostname".yml)"
+
+
 # Start project containers
+##########################
 
 echo ""
 echo "Starting project container..."
 
-echo "...starting grav-webserver container"
-lxc start "$hostname":grav-webserver
+echo "...starting "$PROJECT_ID"-grav-webserver container"
+lxc start "$hostname":"$PROJECT_ID"-grav-webserver
 echo ""
 
 echo "Project container started"
