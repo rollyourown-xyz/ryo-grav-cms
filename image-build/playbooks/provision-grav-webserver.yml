@@ -16,6 +16,7 @@
     - role: install-git
     - role: install-grav-and-dependencies
     - role: install-consul
+    - role: set-up-firewall
     - role: set-up-consul
     - role: set-up-grav-webserver
     - role: set-up-cron
