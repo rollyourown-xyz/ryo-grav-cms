@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default project software versions
-grav_version="1.7.29"
+grav_version="1.7.29.1"
 
 # Script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
