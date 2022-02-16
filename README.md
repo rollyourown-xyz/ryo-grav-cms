@@ -1,54 +1,80 @@
-# ryo-grav-cms
+# Roll Your Own Grav CMS
 
-**NEEDS UPDATING / TIDYING UP AFTER PROJECT WEB PAGES ARE WRITTEN**
+Deploy a [Grav](https://getgrav.org) Content Management System using Ansible, Packer and Terraform.
 
-Rollyourown.xyz project repository for a Grav content management system.
+## Project Summary
 
-## How to use
+This project uses [Ansible](https://www.ansible.com/), [Packer](https://www.packer.io/) and [Terraform](https://www.terraform.io/) to deploy a [Grav](https://getgrav.org) flat-file content management system on an [nginx](https://nginx.org/) web server, with [HAProxy](https://www.haproxy.org/) for TLS/SSL termination and [Certbot](https://certbot.eff.org/) for managing your [Let's Encrypt](https://letsencrypt.org/) certificate.
 
-1. Install ansible and git
+## How to Use
 
-        sudo apt update
-        sudo apt install software-properties-common
-        sudo apt-add-repository --yes --update ppa:ansible/ansible
-        sudo apt update
-        sudo apt install ansible git
+A detailed description of how to use a rollyourown.xyz project to deploy and maintain an open source solution can be found [on the rollyourown.xyz website](https://rollyourown.xyz/rollyourown/how_to_use/).
 
-2. Create a working directory (e.g. `~/ryo-projects`), enter it and clone the project repository
+In summary, to deploy a project:
 
-        mkdir ~/ryo-projects
+1. Acquire [a domain](https://rollyourown.xyz/rollyourown/how_to_use/deploy/#a-domain) to use for your project, or re-use a domain you already own
+
+2. Prepare a [control node](https://rollyourown.xyz/rollyourown/how_to_use/control_node/) with the basic software to run the [rollyourown.xyz](https://rollyourown.xyz) automation scripts, or use an existing control node you have previously set up
+
+3. Prepare a [host server](https://rollyourown.xyz/rollyourown/how_to_use/host_server/) for deploying the project to, or use an existing host server you have previously set up
+
+4. Enter the working directory (e.g. `~/ryo-projects`) on the control node and clone the project repository from [Codeberg](https://codeberg.org/) or [GitHub](https://github.com/)
+
         cd ~/ryo-projects
-        git clone https://git.rollyourown.xyz/ryo-projects/ryo-grav-cms.git
+        git clone https://codeberg.org/rollyourown-xyz/ryo-grav-cms.git
 
-        Temporary, with public key for cloning to test VM
-        git clone ssh://gitea@git.rollyourown.xyz:3022/ryo-projects/ryo-grav-cms.git
+    or
 
-3. Add settings to the project's configuration file
+        cd ~/ryo-projects
+        git clone https://github.com/rollyourown-xyz/ryo-grav-cms.git
 
-        nano ~/ryo-projects/ryo-grav-cms/configuration/configuration.yml
-
-4. Add the host public IP address to the inventory `~/ryo-projects/ryo-grav-cms/configuration/inventory.ini`
-
-        nano ~/ryo-projects/ryo-grav-cms/configuration/inventory.ini
-
-5. Change the path to the configuration file in config_path.yml **if** you have moved the configuration file **or** are not using the working directory `ryo-projects` as above
-
-6. Run the local setup script from the project directory
+5. Copy the project's configuration file and add settings
 
         cd ~/ryo-projects/ryo-grav-cms
-        ./local-setup.sh
+        cp configuration/configuration_TEMPLATE.yml configuration/configuration_<HOST_NAME>.yml
+        nano configuration/configuration_<HOST_NAME>.yml
 
-7. Run the host setup script from the project directory
-
-        cd ~/ryo-projects/ryo-grav-cms
-        ./host-setup.sh
-
-8. Run the image build script from the project directory
+6. Run the deployment script from the project directory
 
         cd ~/ryo-projects/ryo-grav-cms
-        ./build-images.sh -v <VERSION> -w <WEBHOOK VERSION, OPTIONAL> -g <GRAV VERSION, OPTIONAL>
+        ./deploy.sh -n <HOST_NAME> -v <VERSION>
 
-9. Run the deployment script from the project directory
+## How to Collaborate
 
-        cd ~/ryo-projects/ryo-grav-cms
-        ./deploy-project.sh -v <VERSION>
+We would be delighted if you would like to contribute to [rollyourown.xyz](https://rollyourown.xyz) and there are a number of ways you can collaborate on this project:
+
+- [Raising security-related issues](https://rollyourown.xyz/collaborate/security_vulnerabilities/)
+- [Contributing bug reports, feature requests and ideas](https://rollyourown.xyz/collaborate/bug_reports_feature_requests_ideas/)
+- [Improving the project](https://rollyourown.xyz/collaborate/existing_projects_and_modules/) - e.g. to provide fixes or enhancements
+
+You may also like to contribute to the wider [rollyourown.xyz](https://rollyourown.xyz/) project by, for example:
+
+- [Contributing a new project or module](https://rollyourown.xyz/collaborate/new_projects_and_modules/)
+- [Contributing to the rollyourown.xyz website content](https://rollyourown.xyz/collaborate/website_content/) or [design](https://rollyourown.xyz/collaborate/website_design/)
+- [Maintaining a rollyourown.xyz repository](https://rollyourown.xyz/collaborate/working_with_git/what_is_git/#project-maintainer)
+
+Issues for this project can be submitted on [Codeberg](https://codeberg.org/) (_preferred_) or [GitHub](https://github.com/):
+
+- Issues on Codeberg: [here](https://codeberg.org/rollyourown-xyz/ryo-grav-cms/issues)
+- Issues on GitHub: [here](https://github.com/rollyourown-xyz/ryo-grav-cms/issues)
+
+## Security Vulnerabilities
+
+If you have found a security vulnerability in any [rollyourown.xyz](https://rollyourown.xyz/) service or any of the [rollyourown.xyz](https://rollyourown.xyz/) projects, modules or other repositories, please read our [security disclosure policy](https://rollyourown.xyz/collaborate/security_vulnerabilities/) and report this via our [security vulnerability report form](https://forms.rollyourown.xyz/security-vulnerability).
+
+## Repository Links
+
+For public contributions, we maintain mirror repositories of this project on [Codeberg](https://codeberg.org) and [GitHub](https://github.com):
+
+- [https://codeberg.org/rollyourown-xyz/ryo-grav-cms](https://codeberg.org/rollyourown-xyz/ryo-grav-cms)
+- [https://github.com/rollyourown-xyz/ryo-grav-cms](https://github.com/rollyourown-xyz/ryo-grav-cms)
+
+Our preferred collaboration space is Codeberg:
+
+<a href="https://codeberg.org/rollyourown-xyz/ryo-grav-cms"><img alt="Get it on Codeberg" src="https://get-it-on.codeberg.org/get-it-on-blue-on-white.png" height="60"></a>
+
+The primary repository for this project is hosted on our own Git repository server at:
+
+- [https://git.rollyourown.xyz/ryo-projects/ryo-grav-cms](https://git.rollyourown.xyz/ryo-projects/ryo-grav-cms)
+
+**Repositories on our own Git server are accessible only to members of our organisation**.
