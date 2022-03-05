@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2022 Wilfred Nicoll <xyzroller@rollyourown.xyz>
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # Roll Your Own Grav CMS
 
 This is a [rollyourown.xyz project](https://rollyourown.xyz/rollyourown/projects/) to deploy a [Grav](https://getgrav.org) Content Management System using Ansible, Packer and Terraform.
