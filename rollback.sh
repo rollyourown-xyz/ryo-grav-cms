@@ -98,14 +98,12 @@ do
     
     # Deploy module
     echo "Rolling back "$module" module on "$hostname" to version "$ROLL_BACK_MODULE_VERSION""
-    #/bin/bash "$SCRIPT_DIR"/../"$module"/deploy.sh -n "$hostname" -v "$ROLL_BACK_MODULE_VERSION"
-    echo "execute /bin/bash "$SCRIPT_DIR"/../"$module"/deploy.sh -n "$hostname" -v "$ROLL_BACK_MODULE_VERSION""
+    /bin/bash "$SCRIPT_DIR"/../"$module"/scripts-module/deploy-module.sh -n "$hostname" -v "$ROLL_BACK_MODULE_VERSION"
 
   else
     echo "Skipping "$module" module rollback."
   fi
 done
-
 
 
 # Roll back project components
@@ -120,11 +118,10 @@ echo ""
 echo -n "Please enter the version of the project to restore:"
 read -e -p " " ROLL_BACK_PROJECT_VERSION
 
-# Roll back module
+# Roll back project
 echo ""
 echo "Rolling back "$PROJECT_ID" on "$hostname" to version "$ROLL_BACK_PROJECT_VERSION""
-#/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$ROLL_BACK_PROJECT_VERSION"
-echo "execute /bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$ROLL_BACK_PROJECT_VERSION""
+/bin/bash "$SCRIPT_DIR"/scripts-project/deploy-project.sh -n "$hostname" -v "$ROLL_BACK_PROJECT_VERSION"
 
 echo ""
 echo "Rollback completed."
