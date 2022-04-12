@@ -14,7 +14,7 @@
   roles:
     - role: upgrade-container
     - role: install-cron
-    - role: install-iptables
+    - role: install-nftables
     - role: install-rsyslog
     - role: install-nginx
     - role: install-git
