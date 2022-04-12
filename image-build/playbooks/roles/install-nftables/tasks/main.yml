@@ -18,4 +18,3 @@
     name: nftables.service
     enabled: yes
     state: started
-
