@@ -13,11 +13,14 @@ server      = false
 #client_addr = "0.0.0.0"
 client_addr = "[::]"
 
-#bind_addr             = "0.0.0.0"
-bind_addr             = "[::]"
+#bind_addr = "0.0.0.0"
+bind_addr = "[::]"
 
 #retry_join = [ "{{ lxd_host_network_part }}.1" ]
 retry_join = [ "{{ host_public_ipv6_prefix }}::{{lxd_host_network_ipv6_subnet}}:1" ]
+
+advertise_addr_wan_ipv4 = "0.0.0.0"
+advertise_addr_wan_ipv6 = "[::]"
 
 # END EXPERIMENTAL
 #
