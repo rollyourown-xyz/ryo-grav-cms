@@ -34,9 +34,19 @@ locals {
 locals {
   lxd_host_control_ipv4_address  = yamldecode(file(local.host_configuration))["host_control_ip"]
   lxd_host_network_part         = yamldecode(file(local.host_configuration))["lxd_host_network_part"]
+  #
+  # THE FOLLOWING IS EXPERIMENTAL
+  lxd_host_public_ipv6_address  = yamldecode(file(local.host_configuration))["host_public_ipv6_address"]
+  lxd_host_public_ipv6_prefix   = yamldecode(file(local.host_configuration))["host_public_ipv6_prefix"]
+  lxd_host_network_ipv6_subnet  = yamldecode(file(local.host_configuration))["lxd_host_network_ipv6_subnet"]
 }
 
 # Consul variables
 locals {
-  consul_ip_address  = join("", [ local.lxd_host_network_part, ".1" ])
+  #consul_ip_address  = join("", [ local.lxd_host_network_part, ".1" ])
+  #
+  # THE FOLLOWING IS EXPERIMENTAL
+  consul_ip_address  = join("", [ "[", local.lxd_host_public_ipv6_prefix, "::", local.lxd_host_network_ipv6_subnet, ":1", "]" ])
+  # END EXPERIMENTAL
+  #
 }
