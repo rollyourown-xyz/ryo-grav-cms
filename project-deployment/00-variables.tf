@@ -43,7 +43,7 @@ locals {
 
 # Calculated variables
 locals {
-  lxd_host_ipv6_prefix = ( local.host_public_ipv6 == "true" ? local.lxd_host_public_ipv6_prefix : local.lxd_host_private_ipv6_prefix )
+  lxd_host_ipv6_prefix = ( local.host_public_ipv6 == true ? local.lxd_host_public_ipv6_prefix : local.lxd_host_private_ipv6_prefix )
 }
 
 # Consul variables
