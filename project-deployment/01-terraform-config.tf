@@ -30,7 +30,7 @@ provider "lxd" {
 }
 
 provider "consul" {
-  address    = join("", [ local.consul_ip_address, ":8500" ])
+  address    = join("", [ "[", local.consul_ip_address, "]", ":8500" ])
   scheme     = "http"
   datacenter = var.host_id
 }
