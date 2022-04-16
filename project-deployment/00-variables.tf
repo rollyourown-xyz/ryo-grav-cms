@@ -32,7 +32,8 @@ locals {
 
 # LXD variables
 locals {
-  lxd_host_control_ipv4_address  = yamldecode(file(local.host_configuration))["host_control_ip"]
+  lxd_host_public_ipv6          = yamldecode(file(local.host_configuration))["host_public_ipv6"]
+  lxd_host_control_ipv4_address = yamldecode(file(local.host_configuration))["host_control_ip"]
   lxd_host_network_part         = yamldecode(file(local.host_configuration))["lxd_host_network_part"]
   lxd_host_public_ipv6_address  = yamldecode(file(local.host_configuration))["host_public_ipv6_address"]
   lxd_host_public_ipv6_prefix   = yamldecode(file(local.host_configuration))["host_public_ipv6_prefix"]
