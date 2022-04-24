@@ -85,7 +85,7 @@ table inet filter {
     }
 
     chain outbound {
-        # By default, drop outbound traffic
+        # By default, accept outbound traffic
         type filter hook output priority filter; policy accept;
 
         # Allow outbound traffic to loopback interface
