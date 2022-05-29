@@ -43,8 +43,7 @@ locals {
 
 # Variables from configuration files
 locals {
-  #project_id      = yamldecode(file("${abspath(path.root)}/../configuration/configuration_${var.host_id}.yml"))["project_id"]
-  project_id      = "test"
+  project_id      = yamldecode(file("${abspath(path.root)}/../configuration/configuration_${var.host_id}.yml"))["project_id"]
   remote_lxd_host = var.host_id
 }
 
@@ -55,7 +54,7 @@ locals {
   build_image_os      = "ubuntu-minimal"
   build_image_release = "focal"
   
-  build_container_name = ( var.remote_build == false ? "packer-lxd-build" : "${ join(":", [ var.host_id, "packer-lxd-build" ]) }" )
+  build_container_name = ( var.remote_build ? "${ join(":", [ var.host_id, "packer-lxd-build" ]) }" : "packer-lxd-build" )
 
   build_inventory_file = "${abspath(path.root)}/playbooks/inventory.yml"
   build_playbook_file  = "${abspath(path.root)}/playbooks/provision-grav-webserver.yml"
@@ -92,7 +91,7 @@ source "lxd" "container" {
   profile             = "build"
   container_name      = local.build_container_name
   output_image        = local.output_image_name
-  publish_remote_name = ( var.remote_build == false ? "" : var.host_id )
+  publish_remote_name = ( var.remote_build ? var.host_id : "" )
 
   publish_properties = {
     description = local.output_image_description
@@ -107,6 +106,6 @@ build {
   provisioner "ansible" {
     inventory_file  = local.build_inventory_file
     playbook_file   = local.build_playbook_file
-    extra_arguments = ( var.remote_build == false ? [ "--extra-vars", local.build_extra_vars ] : [ "-e", local.ansible_remote_argument, "--extra-vars", local.build_extra_vars ] )
+    extra_arguments = ( var.remote_build ? [ "-e", local.ansible_remote_argument, "--extra-vars", local.build_extra_vars ] : [ "--extra-vars", local.build_extra_vars ] )
   }
 }
