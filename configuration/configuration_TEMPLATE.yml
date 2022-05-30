@@ -34,3 +34,12 @@ project_admin_password: <PASSWORD>
 # Enter an email address for the administrator of this project, 
 # this will be used for letsencrypt certificates and for the grav_admin user
 project_admin_email: <EMAIL ADDRESS>
+
+
+#-----------------------
+# Optional Configuration
+#-----------------------
+
+# Set this variable to true to build images on the remote host server. Otherwise,
+# images will be built on the control node and uploaded to the host server.
+remote_build: false
