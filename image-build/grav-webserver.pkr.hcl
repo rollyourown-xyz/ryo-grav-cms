@@ -83,18 +83,18 @@ locals {
 }
 
 # Computed post-processor inline arrays
-locals {
-  post_processor_copy = ( var.remote ? [ "echo \"${local.output_image_name} was built remotely" ] : [ "echo \"Copying image ${local.output_image_name} to remote host ${local.remote_lxd_host}\"", 
-                                                                                                      "echo \"This may take some time\"",
-                                                                                                      "lxc image copy ${local.output_image_name} ${local.remote_lxd_host}: --copy-aliases",
-                                                                                                      "echo \"Image copying completed\"" ] )
-}
+# locals {
+#   post_processor_copy = ( var.remote ? [ "echo \"${local.output_image_name} was built remotely" ] : [ "echo \"Copying image ${local.output_image_name} to remote host ${local.remote_lxd_host}\"", 
+#                                                                                                       "echo \"This may take some time\"",
+#                                                                                                       "lxc image copy ${local.output_image_name} ${local.remote_lxd_host}: --copy-aliases",
+#                                                                                                       "echo \"Image copying completed\"" ] )
+# }
 
-locals {
-  post_processor_delete = ( var.remote ? [ "echo \"${local.output_image_name} was built remotely" ] : [ "echo \"Deleting local image ${local.output_image_name}\"",
-                                                                                                        "lxc image delete ${local.output_image_name}",
-                                                                                                        "echo \"Image deletion completed\"" ] )
-}
+# locals {
+#   post_processor_delete = ( var.remote ? [ "echo \"${local.output_image_name} was built remotely" ] : [ "echo \"Deleting local image ${local.output_image_name}\"",
+#                                                                                                         "lxc image delete ${local.output_image_name}",
+#                                                                                                         "echo \"Image deletion completed\"" ] )
+# }
 
 
 ## Build template
@@ -105,7 +105,8 @@ source "lxd" "container" {
   profile             = "build"
   container_name      = local.build_container_name
   output_image        = local.output_image_name
-  publish_remote_name = ( var.remote ? var.host_id : "" )
+  #publish_remote_name = ( var.remote ? var.host_id : "" )
+  publish_remote_name = var.host_id
 
   publish_properties = {
     description = local.output_image_description
@@ -123,18 +124,18 @@ build {
     extra_arguments = ( var.remote ? [ "-e", local.ansible_remote_argument, "--extra-vars", local.build_extra_vars ] : [ "--extra-vars", local.build_extra_vars ] )
   }
 
-  post-processors {
+  # post-processors {
 
-    # Copy image to remote LXD host if built locally
-    post-processor "shell-local" {
-      inline = local.post_processor_copy
-      keep_input_artifact = true
-    }
+  #   # Copy image to remote LXD host if built locally
+  #   post-processor "shell-local" {
+  #     inline = local.post_processor_copy
+  #     keep_input_artifact = true
+  #   }
 
-    # Removing image from local machine after copying to remote host if built locally
-    post-processor "shell-local" {
-      inline = local.post_processor_delete
-      keep_input_artifact = false
-    }
-  }
+  #   # Removing image from local machine after copying to remote host if built locally
+  #   post-processor "shell-local" {
+  #     inline = local.post_processor_delete
+  #     keep_input_artifact = false
+  #   }
+  # }
 }
