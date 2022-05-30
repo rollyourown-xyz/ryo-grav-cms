@@ -36,13 +36,13 @@ do
   case "${flag}" in
     n) hostname=${OPTARG};;
     v) version=${OPTARG};;
-    r) remote=${OPTARG};;
+    r) remote_build=${OPTARG};;
     h) helpMessage ;;
     ?) errorMessage ;;
   esac
 done
 
-if [ -z "$hostname" ] || [ -z "$version" ] || [ -z "$remote" ]
+if [ -z "$hostname" ] || [ -z "$version" ] || [ -z "$remote_build" ]
 then
   errorMessage
 fi
@@ -53,6 +53,6 @@ fi
 # Grav webserver
 echo ""
 echo "Building grav-webserver image on "$hostname""
-echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"grav_version=$grav_version\" -var \"version=$version\" -var \"remote=$remote\" "$SCRIPT_DIR"/../image-build/grav-webserver.pkr.hcl"
-packer build -var "host_id="$hostname"" -var "grav_version="$grav_version"" -var "version="$version"" -var "remote="$remote"" "$SCRIPT_DIR"/../image-build/grav-webserver.pkr.hcl
+echo "Executing command: packer build -var \"host_id="$hostname"\" -var \"grav_version=$grav_version\" -var \"version=$version\" -var \"remote=$remote_build\" "$SCRIPT_DIR"/../image-build/grav-webserver.pkr.hcl"
+packer build -var "host_id="$hostname"" -var "grav_version="$grav_version"" -var "version="$version"" -var "remote="$remote_build"" "$SCRIPT_DIR"/../image-build/grav-webserver.pkr.hcl
 echo "Completed"

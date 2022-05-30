@@ -84,16 +84,16 @@ locals {
 
 # Computed post-processor inline arrays
 locals {
-  post_processor_copy = ( var.remote ? [] : [ "echo \"Copying image ${local.output_image_name} to remote host ${local.remote_lxd_host}\"", 
-                                              "echo \"This may take some time\"",
-                                              "lxc image copy ${local.output_image_name} ${local.remote_lxd_host}: --copy-aliases",
-                                              "echo \"Image copying completed\"" ] )
+  post_processor_copy = ( var.remote ? [ "echo \"${local.output_image_name} was built remotely" ] : [ "echo \"Copying image ${local.output_image_name} to remote host ${local.remote_lxd_host}\"", 
+                                                                                                      "echo \"This may take some time\"",
+                                                                                                      "lxc image copy ${local.output_image_name} ${local.remote_lxd_host}: --copy-aliases",
+                                                                                                      "echo \"Image copying completed\"" ] )
 }
 
 locals {
-  post_processor_delete = ( var.remote ? [] : [ "echo \"Deleting local image ${local.output_image_name}\"",
-                                                "lxc image delete ${local.output_image_name}",
-                                                "echo \"Image deletion completed\"" ] )
+  post_processor_delete = ( var.remote ? [ "echo \"${local.output_image_name} was built remotely" ] : [ "echo \"Deleting local image ${local.output_image_name}\"",
+                                                                                                        "lxc image delete ${local.output_image_name}",
+                                                                                                        "echo \"Image deletion completed\"" ] )
 }
 
 
