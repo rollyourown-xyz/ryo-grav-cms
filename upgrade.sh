@@ -136,7 +136,7 @@ do
     # Upgrade module
     echo ""
     echo "Upgrading "$module" module on "$hostname" with version "$version""
-    /bin/bash "$SCRIPT_DIR"/../"$module"/upgrade.sh -n "$hostname" -v "$version"
+    /bin/bash "$SCRIPT_DIR"/../"$module"/upgrade.sh -n "$hostname" -v "$version" -b "$REMOTE"
 
   else
     echo ""
