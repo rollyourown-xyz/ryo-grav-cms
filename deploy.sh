@@ -117,7 +117,7 @@ if [ $skip_modules == false ]; then
       # Deploy module
       echo ""
       echo "Deploying "$module" module on "$hostname" with version "$version""
-      /bin/bash "$SCRIPT_DIR"/../"$module"/deploy.sh -n "$hostname" -v "$version"
+      /bin/bash "$SCRIPT_DIR"/../"$module"/deploy.sh -n "$hostname" -v "$version" -b "$REMOTE"
 
     done
 
@@ -162,7 +162,7 @@ if [ $skip_modules == false ]; then
         # Deploy module
         echo ""
         echo "Deploying "$module" module on "$hostname" with version "$version""
-        /bin/bash "$SCRIPT_DIR"/../"$module"/deploy.sh -n "$hostname" -v "$version"
+        /bin/bash "$SCRIPT_DIR"/../"$module"/deploy.sh -n "$hostname" -v "$version" -b "$REMOTE"
 
       else
         echo ""
